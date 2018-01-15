@@ -2,8 +2,12 @@ import unittest
 
 import os
 
-from pyop.problems.dtlz import DTLZ1, DTLZ2, DTLZ3, DTLZ4, DTLZ7
-from pyop.problems.zdt import ZDT1, ZDT2, ZDT3, ZDT4, ZDT6
+import optproblems
+from optproblems.dtlz import DTLZ1 as optDTLZ1
+from optproblems import Individual
+
+from pyop.problems.dtlz import *
+from pyop.problems.zdt import *
 from pyop.problems.tnk import TNK
 from pyop.problems.rosenbrock import Rosenbrock
 from pyop.problems.rastrigin import Rastrigin
@@ -26,7 +30,7 @@ def load(name):
     return X, F, G
 
 
-problems = [('DTLZ1', [10, 3]), ('DTLZ2', [10, 3]), ('DTLZ3', [10, 3]), ('DTLZ4', [10, 3]), ('DTLZ7', [10, 3]),
+problems = [('DTLZ1', [10, 3]), ('DTLZ2', [10, 3]), ('DTLZ3', [10, 3]), ('DTLZ4', [10, 3]), ('DTLZ5', [10, 3]),('DTLZ6', [10, 3]) ,('DTLZ7', [10, 3]),
 ('ZDT1', [10]), ('ZDT2', [10]), ('ZDT3', [10]), ('ZDT4', [10]), ('ZDT6', [10]), ('TNK', []), ('Rosenbrock', [10]),
 ('Rastrigin', [10]), ('Griewank', [10]), ('OSY', []), ('Kursawe', [])
             ]
@@ -52,6 +56,15 @@ class ProblemTest(unittest.TestCase):
                 G_[G_<0] = 0
                 CV_ = np.sum(G_, axis=1)
                 self.assertTrue(np.all(np.abs(CV_ - CV) < 0.00001))
+
+
+def opt_problems():
+    T = np.zeros((100, 3))
+    for i in range(100):
+        ind = Individual(X[i, :])
+        optDTLZ1(3, 10).evaluate(ind)
+        T[i, :] = ind.objective_values
+    return T
 
 
 if __name__ == '__main__':
