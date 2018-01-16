@@ -99,14 +99,10 @@ class DTLZ5(DTLZ):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
 
-        theta = np.pi / (4 * (1 + g[:, None])) * (1 + 2 * g[:, None] * X_)
-        theta[:, 0] = x[:, 0] * np.pi / 2.0
+        theta = 1 / (2 * (1 + g[:, None])) * (1 + 2 * g[:, None] * X_)
+        theta[:, 0] = x[:, 0]
+        self.obj_func(theta, g, f)
 
-        for i in range(0, self.n_obj):
-            f[:, i] = (1 + g)
-            f[:, i] *= np.prod(np.cos(theta[:, :self.n_obj - 1 - i]), axis=1)  # * np.pi / 2.0), axis=1)
-            if i > 0:
-                f[:, i] *= np.sin(theta[:, self.n_obj - 1 - i])  # * np.pi / 2.0)
 
 
 class DTLZ6(DTLZ):
@@ -120,13 +116,9 @@ class DTLZ6(DTLZ):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = np.sum(np.power(X_M, 0.1), axis=1)
 
-        theta = np.pi / (4 * (1 + g[:, None])) * (1 + 2 * g[:, None] * X_)
-        theta[:, 0] = x[:, 0] * np.pi / 2.0
-        for i in range(0, self.n_obj):
-            f[:, i] = (1 + g)
-            f[:, i] *= np.prod(np.cos(theta[:, :self.n_obj - 1 - i]), axis=1)  # * np.pi / 2.0), axis=1)
-            if i > 0:
-                f[:, i] *= np.sin(theta[:, self.n_obj - 1 - i])  # * np.pi / 2.0)
+        theta = 1 / (2 * (1 + g[:, None])) * (1 + 2 * g[:, None] * X_)
+        theta[:, 0] = x[:, 0]
+        self.obj_func(theta, g, f)
 
 
 class DTLZ7(DTLZ):

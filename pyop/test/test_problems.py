@@ -58,7 +58,7 @@ class ProblemTest(unittest.TestCase):
                 self.assertTrue(np.all(np.abs(CV_ - CV) < 0.00001))
 
 
-def opt_problems():
+def opt_problems(X):
     T = np.zeros((100, 3))
     for i in range(100):
         ind = Individual(X[i, :])

@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="accdbafc-e16a-4052-8eb1-250699dfe209" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/DTLZ5.f" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/DTLZ5.x" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/DTLZ6.f" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/DTLZ6.x" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/pyop/test/test_correctness.py" afterPath="$PROJECT_DIR$/pyop/test/test_problems.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/problems/dtlz.py" afterPath="$PROJECT_DIR$/pyop/problems/dtlz.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/test/test_problems.py" afterPath="$PROJECT_DIR$/pyop/test/test_problems.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,7 +14,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_correctness_ProblemTest_test_dtlz.coverage" NAME="Unittests for test_correctness.ProblemTest.test_dtlz Coverage Results" MODIFIED="1515954706190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
-    <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_problems_ProblemTest_test_problems.coverage" NAME="Unittests for test_problems.ProblemTest.test_problems Coverage Results" MODIFIED="1515980692204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
+    <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_problems_ProblemTest_test_problems.coverage" NAME="Unittests for test_problems.ProblemTest.test_problems Coverage Results" MODIFIED="1516123088515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_correctness_ProblemTest.coverage" NAME="Unittests for pyop.test.test_problems.ProblemTest Coverage Results" MODIFIED="1515975094452" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_correctness_ProblemTest_test_problems.coverage" NAME="Unittests for test_correctness.ProblemTest.test_problems Coverage Results" MODIFIED="1515955131552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_in_test_correctness_py.coverage" NAME="Unittests in test_correctness.py Coverage Results" MODIFIED="1515958566406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
@@ -30,13 +25,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="test_problems.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pyop/test/test_problems.py">
+      <file leaf-file-name="dtlz.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pyop/problems/dtlz.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="38" column="37" lean-forward="false" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+            <state relative-caret-position="249">
+              <caret line="109" column="38" lean-forward="true" selection-start-line="109" selection-start-column="38" selection-end-line="109" selection-end-column="38" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,8 +80,8 @@
         <option value="$PROJECT_DIR$/pyop/problems/osy.py" />
         <option value="$PROJECT_DIR$/pyop/problems/kursawe.py" />
         <option value="$PROJECT_DIR$/pyop/test/test_correctness.py" />
-        <option value="$PROJECT_DIR$/pyop/problems/dtlz.py" />
         <option value="$PROJECT_DIR$/pyop/test/test_problems.py" />
+        <option value="$PROJECT_DIR$/pyop/problems/dtlz.py" />
       </list>
     </option>
   </component>
@@ -291,15 +286,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.14 at 20h 38m 03s.xml">
-      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.14 at 20h 38m 48s.xml">
-      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.14 at 20h 39m 42s.xml">
-      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.14 at 20h 40m 04s.xml">
       <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
     </history-entry>
@@ -319,6 +305,15 @@
       <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
     </history-entry>
     <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.14 at 20h 44m 52s.xml">
+      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.16 at 12h 16m 49s.xml">
+      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.16 at 12h 17m 45s.xml">
+      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.01.16 at 12h 18m 09s.xml">
       <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
     </history-entry>
   </component>
@@ -654,14 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/miniconda3/lib/python3.6/site-packages/optproblems/dtlz.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="99" column="8" lean-forward="false" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pyop/resources/DTLZ5.f">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -710,22 +697,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyop/problems/dtlz.py">
+    <entry file="file://$USER_HOME$/miniconda3/lib/python3.6/site-packages/optproblems/dtlz.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="134" column="0" lean-forward="true" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="225">
+          <caret line="15" column="52" lean-forward="false" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyop/test/test_problems.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="38" column="37" lean-forward="false" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+        <state relative-caret-position="243">
+          <caret line="46" column="46" lean-forward="true" selection-start-line="46" selection-start-column="46" selection-end-line="46" selection-end-column="46" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyop/problems/dtlz.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="109" column="38" lean-forward="true" selection-start-line="109" selection-start-column="38" selection-end-line="109" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
