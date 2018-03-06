@@ -37,7 +37,7 @@ class Problem:
         if self.n_constr > 0:
             self.func(x, f, g)
         else:
-            self.func(x, f)
+                self.func(x, f)
 
         if only_single_value:
             return f[0, :], g[0, :]

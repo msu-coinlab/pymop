@@ -104,7 +104,6 @@ class DTLZ5(DTLZ):
         self.obj_func(theta, g, f)
 
 
-
 class DTLZ6(DTLZ):
     def __init__(self, n_var, n_obj):
         super().__init__(n_var, n_obj)

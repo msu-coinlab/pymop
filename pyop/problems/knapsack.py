@@ -21,10 +21,8 @@ class Knapsack(Problem):
         self.C = C
 
     def evaluate_(self, x, f, g):
-        g[:,0] = np.sum(self.W * x, axis=1) - self.C
+        g[:, 0] = np.sum(self.W * x, axis=1) - self.C
         f[:, 0] = -np.sum(self.P * x, axis=1)
-
-
 
 
 def create_random_knapsack_problem(n_items):
