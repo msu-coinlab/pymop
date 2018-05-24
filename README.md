@@ -5,7 +5,7 @@
 Installation
 ------
 
-The test problems are uploaded to the PyPi Repository (https://pypi.org).
+The test problems are uploaded to the PyPi Repository.
 
 ```bash
 pip install pyop
@@ -26,7 +26,7 @@ from pyop.problems.dtlz import DTLZ1
 problem = DTLZ1(n_var=10, n_obj=3)
 
 # evaluation function returns by default two numpy arrays - objective function values and constraints -
-# As input either provide a vector 
+# as input either provide a vector 
 F, G = problem.evaluate(np.random.random(10))
 
 # or a whole matrix to evaluate several solutions at once
@@ -75,7 +75,7 @@ Implementation
 ------
 
 All problems are implemented to efficiently evaluate multiple input points at a time.
-Therefore, the input can be a n times m dimensional matrix, where n is the number of points to evaluate and m the number of variables.
+Therefore, the input can be a n x m dimensional matrix, where n is the number of points to evaluate and m the number of variables.
 
 
 Contact

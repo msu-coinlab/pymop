@@ -108,7 +108,7 @@ if __name__ == "__main__":
     problem = DTLZ1(n_var=10, n_obj=3)
 
     # evaluation function returns by default two numpy arrays - objective function values and constraints -
-    # As input either provide a vector
+    # as input either provide a vector
     F, G = problem.evaluate(np.random.random(10))
 
     # or a whole matrix to evaluate several solutions at once
