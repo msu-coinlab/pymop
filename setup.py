@@ -8,7 +8,7 @@ except (IOError, ImportError):
 
 setup(
     name="pyop",
-    version="0.1",
+    version="0.1.1",
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",

@@ -50,28 +50,12 @@ class ProblemTest(unittest.TestCase):
             if problem.n_obj == 1:
                 F = F[:, None]
 
-            if name == "WeldedBeam":
-                pass
-
-
             self.assertTrue(np.all(np.abs(F_ - F) < 0.00001))
 
             if problem.n_constr > 0:
                 G_[G_<0] = 0
                 CV_ = np.sum(G_, axis=1)
                 self.assertTrue(np.all(np.abs(CV_ - CV) < 0.00001))
-
-
-def opt_problems(X):
-    from optproblems import Individual
-    from optproblems.dtlz import DTLZ2 as optDTLZ2
-
-    T = np.zeros((100, 3))
-    for i in range(100):
-        ind = Individual(X[i, :])
-        optDTLZ2(3, 10).evaluate(ind)
-        T[i, :] = ind.objective_values
-    return T
 
 
 if __name__ == '__main__':
