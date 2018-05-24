@@ -3,6 +3,7 @@ This is the base class for a problem is used to define specific problem definiti
 If for the given problem the optima are known they can be provided by overwriting the given functions.
 """
 
+import numpy as np
 
 class Problem:
     def __init__(self, n_var=0, n_obj=0, n_constr=0, xl=None, xu=None, func=None):
@@ -96,6 +97,7 @@ class Problem:
 
 
 if __name__ == "__main__":
+
     # numpy arrays are required as an input
     import numpy as np
 
@@ -105,17 +107,18 @@ if __name__ == "__main__":
     # initialize it with the necessary parameters
     problem = DTLZ1(n_var=10, n_obj=3)
 
-    # evaluation function always returns two numpy arrays - the function values and the constraints -
-    # either provide a vector to evaluate only one point
+    # evaluation function returns by default two numpy arrays - objective function values and constraints -
+    # As input either provide a vector
     F, G = problem.evaluate(np.random.random(10))
 
-    # or a whole matrix to evaluate several solutions at once - no constraints are returned
+    # or a whole matrix to evaluate several solutions at once
+    F, G = problem.evaluate(np.random.random((100, 10)))
+
+    # if no constraints should be returned
     F = problem.evaluate(np.random.random((100, 10)), return_constraints=0)
 
-    # create welded beam problem
+    # if only the constraint violation should be returned - vector of zeros if no constraints exist
     from pyop.problems.welded_beam import WeldedBeam
 
     problem = WeldedBeam()
-
-    # return constraint violation only
     F, CV = problem.evaluate(np.random.random((100, 4)), return_constraints=2)

@@ -25,19 +25,19 @@ from pyop.problems.dtlz import DTLZ1
 # initialize it with the necessary parameters
 problem = DTLZ1(n_var=10, n_obj=3)
 
-# evaluation function always returns two numpy arrays - the function values and the constraints -
-# either provide a vector to evaluate only one point
+# evaluation function returns by default two numpy arrays - objective function values and constraints -
+# As input either provide a vector 
 F, G = problem.evaluate(np.random.random(10))
 
-# or a whole matrix to evaluate several solutions at once - no constraints are returned
+# or a whole matrix to evaluate several solutions at once
+F, G = problem.evaluate(np.random.random((100, 10)))
+
+# if no constraints should be returned
 F = problem.evaluate(np.random.random((100, 10)), return_constraints=0)
 
-# create welded beam problem
+# if only the constraint violation should be returned - vector of zeros if no constraints exist
 from pyop.problems.welded_beam import WeldedBeam
-
 problem = WeldedBeam()
-
-# return constraint violation only
 F, CV = problem.evaluate(np.random.random((100, 4)), return_constraints=2)
 
 ```
@@ -45,8 +45,6 @@ F, CV = problem.evaluate(np.random.random((100, 4)), return_constraints=2)
 
 Problems
 ------
-
-(Problem Description are taken from https://www.sfu.ca/~ssurjano/)
 
 In this package single- as well as multi-objective test problems are included.
 
@@ -73,13 +71,11 @@ In this package single- as well as multi-objective test problems are included.
 
 
 
-
 Implementation
 ------
 
 All problems are implemented to efficiently evaluate multiple input points at a time.
-Therefore, the input can be a nxm dimensional matrix, n is the number of points to evaluate and m the number of variables.
-
+Therefore, the input can be a n times m dimensional matrix, where n is the number of points to evaluate and m the number of variables.
 
 
 Contact
