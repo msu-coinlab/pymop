@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="accdbafc-e16a-4052-8eb1-250699dfe209" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/problems/bnh.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/problems/carside.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/problems/sphere.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/problems/welded_beam.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/BNH.f" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/BNH.g" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/BNH.x" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/Carside.f" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/Carside.g" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/Carside.x" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/WeldedBeam.f" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/WeldedBeam.g" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pyop/resources/WeldedBeam.x" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/problem.py" afterPath="$PROJECT_DIR$/pyop/problem.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/problems/dtlz.py" afterPath="$PROJECT_DIR$/pyop/problems/dtlz.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/problems/knapsack.py" afterPath="$PROJECT_DIR$/pyop/problems/knapsack.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/problems/tnk.py" afterPath="$PROJECT_DIR$/pyop/problems/tnk.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyop/test/test_problems.py" afterPath="$PROJECT_DIR$/pyop/test/test_problems.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,7 +17,7 @@
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_problems_ProblemTest_test_problems.coverage" NAME="Unittests for test_problems.ProblemTest.test_problems Coverage Results" MODIFIED="1520357674053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_correctness_ProblemTest.coverage" NAME="Unittests for pyop.test.test_problems.ProblemTest Coverage Results" MODIFIED="1515975094452" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_correctness_ProblemTest_test_problems.coverage" NAME="Unittests for test_correctness.ProblemTest.test_problems Coverage Results" MODIFIED="1515955131552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
-    <SUITE FILE_PATH="coverage/problems_python$Unittests_in_test_problems_py.coverage" NAME="Unittests in test_problems.py Coverage Results" MODIFIED="1520358213706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
+    <SUITE FILE_PATH="coverage/problems_python$Unittests_in_test_problems_py.coverage" NAME="Unittests in test_problems.py Coverage Results" MODIFIED="1520372302229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_in_test_correctness_py.coverage" NAME="Unittests in test_correctness.py Coverage Results" MODIFIED="1515958566406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_correctness_DTLZ_Test.coverage" NAME="Unittests for test_correctness.DTLZ_Test Coverage Results" MODIFIED="1515954626247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
     <SUITE FILE_PATH="coverage/problems_python$Unittests_for_test_problems_ProblemTest_test_sgsg.coverage" NAME="Unittests for test_problems.ProblemTest.test_sgsg Coverage Results" MODIFIED="1515976276553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pyop/test" />
@@ -46,9 +29,11 @@
       <file leaf-file-name="bnh.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pyop/problems/bnh.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="225">
+              <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -165,7 +150,7 @@
               <item name="problems-python" type="b2602c69:ProjectViewProjectNode" />
               <item name="problems-python" type="462c0819:PsiDirectoryNode" />
               <item name="pyop" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="problems" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -316,9 +301,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.03.06 at 12h 17m 24s.xml">
-      <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_for_test_problems_ProblemTest_test_problems - 2018.03.06 at 12h 32m 26s.xml">
       <configuration name="Unittests for test_problems.ProblemTest.test_problems" configurationId="tests" />
     </history-entry>
@@ -346,6 +328,9 @@
     <history-entry file="Unittests_in_test_problems_py - 2018.03.06 at 12h 43m 34s.xml">
       <configuration name="Unittests in test_problems.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_in_test_problems_py - 2018.03.06 at 16h 38m 22s.xml">
+      <configuration name="Unittests in test_problems.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="41" y="23" width="1399" height="877" extended-state="0" />
@@ -355,7 +340,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3286445" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286445" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -657,7 +642,7 @@
         <state relative-caret-position="314">
           <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -667,7 +652,7 @@
         <state relative-caret-position="240">
           <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -722,9 +707,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pyop/problems/bnh.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="225">
+          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
