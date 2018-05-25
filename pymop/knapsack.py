@@ -1,5 +1,5 @@
 import numpy as np
-from pyop.problem import Problem
+from pymop.problem import Problem
 from pymoo.rand import random
 
 

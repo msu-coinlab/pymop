@@ -7,15 +7,15 @@ except (IOError, ImportError):
     long_description = ''
 
 setup(
-    name="pyop",
+    name="pymop",
     version="0.1.1",
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",
     long_description=long_description,
-    url="https://github.com/julesy89/pyop",
+    url="https://github.com/julesy89/pymop",
     license='MIT',
     keywords="optimization",
-    packages=['pyop', 'pyop/problems'],
+    packages=['pymop'],
     install_requires=['numpy']
 )

@@ -102,7 +102,7 @@ if __name__ == "__main__":
     import numpy as np
 
     # first import the specific problem to be solved
-    from pyop.problems.dtlz import DTLZ1
+    from pymop.dtlz import DTLZ1
 
     # initialize it with the necessary parameters
     problem = DTLZ1(n_var=10, n_obj=3)
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     F = problem.evaluate(np.random.random((100, 10)), return_constraints=0)
 
     # if only the constraint violation should be returned - vector of zeros if no constraints exist
-    from pyop.problems.welded_beam import WeldedBeam
+    from pymop.welded_beam import WeldedBeam
 
     problem = WeldedBeam()
     F, CV = problem.evaluate(np.random.random((100, 4)), return_constraints=2)
