@@ -1,7 +1,7 @@
 import numpy as np
 
 from pymop.problem import Problem
-from pymop.util import get_uniform, get_weights
+from pymop.util import get_weights
 
 
 class DTLZ(Problem):
@@ -31,7 +31,7 @@ class DTLZ(Problem):
 
 
 def generic_sphere(n_dim):
-    w = get_weights(n_dim * 200, n_dim)
+    w = get_weights(n_dim * 200, n_dim, method="uniform", fill_with_random=False)
     F = w / np.tile(np.linalg.norm(w, axis=1)[:, None], (1, w.shape[1]))
     return F
 
@@ -40,7 +40,7 @@ class DTLZ1(DTLZ):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
-        return get_weights(self.n_obj * 200, self.n_obj)
+        return get_weights(self.n_obj * 200, self.n_obj, method="uniform", fill_with_random=False)
 
     def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
