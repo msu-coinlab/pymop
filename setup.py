@@ -8,7 +8,7 @@ except (IOError, ImportError):
 
 setup(
     name="pymop",
-    version="0.1.1",
+    version="0.1.2",
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",
@@ -17,5 +17,5 @@ setup(
     license='MIT',
     keywords="optimization",
     packages=['pymop'],
-    install_requires=['numpy']
+    install_requires=['numpy', 'matplotlib']
 )

@@ -1,6 +1,8 @@
 import numpy as np
-from problem import Problem
-from util import get_uniform_weights
+
+from pymop.problem import Problem
+from pymop.util import get_uniform, get_weights
+
 
 class DTLZ(Problem):
     def __init__(self, n_var, n_obj):
@@ -8,7 +10,7 @@ class DTLZ(Problem):
         self.n_obj = n_obj
         self.n_var = n_var
         self.n_constr = 0
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = np.zeros(self.n_var)
         self.xu = np.ones(self.n_var)
 
@@ -28,10 +30,9 @@ class DTLZ(Problem):
                 f[:, i] *= np.sin(np.power(X_[:, X_.shape[1] - i], alpha) * np.pi / 2.0)
 
 
-def generic_sphere(n_obj):
-    w = get_uniform_weights(n_obj, n_obj* 200 )
+def generic_sphere(n_dim):
+    w = get_weights(n_dim * 200, n_dim)
     F = w / np.tile(np.linalg.norm(w, axis=1)[:, None], (1, w.shape[1]))
-
     return F
 
 class DTLZ1(DTLZ):
@@ -39,9 +40,9 @@ class DTLZ1(DTLZ):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
-        return get_uniform_weights(self.n_obj, self.n_obj*200)
+        return get_weights(self.n_obj * 200, self.n_obj)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g1(X_M)
         for i in range(0, self.n_obj):
@@ -58,7 +59,7 @@ class DTLZ2(DTLZ):
     def calc_pareto_front(self):
         return generic_sphere(self.n_obj)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
         self.obj_func(X_, g, f, alpha=1)
@@ -71,7 +72,7 @@ class DTLZ3(DTLZ):
     def calc_pareto_front(self):
         return generic_sphere(self.n_obj)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g1(X_M)
         self.obj_func(X_, g, f, alpha=1)
@@ -86,7 +87,7 @@ class DTLZ4(DTLZ):
     def calc_pareto_front(self):
         return generic_sphere(self.n_obj)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
         self.obj_func(X_, g, f, alpha=self.alpha)
@@ -99,7 +100,7 @@ class DTLZ5(DTLZ):
     def calc_pareto_front(self):
         pass
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
 
@@ -115,7 +116,7 @@ class DTLZ6(DTLZ):
     def calc_pareto_front(self):
         pass
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = np.sum(np.power(X_M, 0.1), axis=1)
 
@@ -131,7 +132,7 @@ class DTLZ7(DTLZ):
     def calc_pareto_front(self):
         pass
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         for i in range(0, self.n_obj - 1):
             f[:, i] = x[:, i]
 

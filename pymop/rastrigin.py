@@ -10,10 +10,10 @@ class Rastrigin(Problem):
         self.A = A
         self.n_constr = 0
         self.n_obj = 1
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = -5 * np.ones(self.n_var)
         self.xu = 5 * np.ones(self.n_var)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         z = np.power(x, 2) - self.A * np.cos(2 * np.pi * x)
         f[:,0] = self.A * self.n_var + np.sum(z, axis=1)

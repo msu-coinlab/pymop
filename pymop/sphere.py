@@ -8,9 +8,9 @@ class Sphere(Problem):
         self.n_var = n_var
         self.n_constr = 0
         self.n_obj = 1
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = 0 * np.ones(self.n_var)
         self.xu = 1 * np.ones(self.n_var)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         f[:, 0] = np.sum(np.square(x - 0.5), axis=1)

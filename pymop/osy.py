@@ -9,11 +9,11 @@ class OSY(Problem):
         self.n_var = 6
         self.n_constr = 6
         self.n_obj = 2
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = np.array([0.0, 0.0, 1.0, 0.0, 1.0, 0.0])
         self.xu = np.array([10.0, 10.0, 5.0, 6.0, 5.0, 10.0])
 
-    def evaluate_(self, x, f, g):
+    def _evaluate(self, x, f, g):
         f[:, 0] = -(25 * np.square(x[:, 0] - 2) + np.square(x[:, 1] - 2) + np.square(x[:, 2] - 1) \
                     + np.square(x[:, 3] - 4) + + np.square(x[:, 4] - 1))
 

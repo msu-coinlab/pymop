@@ -9,11 +9,11 @@ class BNH(Problem):
         self.n_var = 2
         self.n_constr = 2
         self.n_obj = 2
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = np.zeros(self.n_var)
         self.xu = np.array([5.0, 3.0])
 
-    def evaluate_(self, x, f, g):
+    def _evaluate(self, x, f, g):
         f[:, 0] = 4 * x[:, 0] ** 2 + 4 * x[:, 1] ** 2
         f[:, 1] = (x[:, 0] - 5) ** 2 + (x[:, 1] - 5) ** 2
         g[:, 0] = (1 / 25) * ((x[:, 0] - 5) ** 2 + x[:, 1] ** 2 - 25)

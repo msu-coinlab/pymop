@@ -9,11 +9,11 @@ class WeldedBeam(Problem):
         self.n_var = 4
         self.n_constr = 4
         self.n_obj = 2
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = np.array([0.125, 0.1, 0.1, 0.125])
         self.xu = np.array([5.0, 10.0, 10.0, 5.0])
 
-    def evaluate_(self, x, f, g):
+    def _evaluate(self, x, f, g):
         f[:, 0] = 1.10471 * x[:, 0] ** 2 * x[:, 1] + 0.04811 * x[:, 2] * x[:, 3] * (14.0 + x[:, 1])
         f[:, 1] = 2.1952 / (x[:, 3] * x[:, 2] ** 3)
 

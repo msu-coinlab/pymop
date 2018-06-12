@@ -5,7 +5,7 @@ from pymop.problem import Problem
 
 class ZDT(Problem):
     def __init__(self, n_var=30):
-        Problem.__init__(self, func=self.evaluate_)
+        Problem.__init__(self, func=self._evaluate)
         self.n_var = n_var
         self.n_constr = 0
         self.n_obj = 2
@@ -22,7 +22,7 @@ class ZDT1(ZDT):
         x1 = np.arange(0, 1.01, 0.01)
         return np.array([x1, 1 - np.sqrt(x1)]).T
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         f[:, 0] = x[:, 0]
         g = 1 + 9.0 / (self.n_var - 1) * np.sum(x[:, 1:], axis=1)
         f[:, 1] = g * (1 - np.power((f[:, 0] / g), 0.5))
@@ -36,7 +36,7 @@ class ZDT2(ZDT):
         x1 = np.arange(0, 1.01, 0.01)
         return np.array([x1, 1 - np.power(x1, 2)]).T
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         f[:, 0] = x[:, 0]
         c = np.sum(x[:, 1:], axis=1)
         g = 1.0 + 9.0 * c / (self.n_var - 1)
@@ -59,7 +59,7 @@ class ZDT3(ZDT):
             pareto_front = np.concatenate((pareto_front, np.array([x1, x2]).T), axis=0)
         return pareto_front
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         f[:, 0] = x[:, 0]
         c = np.sum(x[:, 1:], axis=1)
         g = 1.0 + 9.0 * c / (self.n_var - 1)
@@ -73,13 +73,13 @@ class ZDT4(ZDT):
         self.xl[0] = 0.0
         self.xu = 5 * np.ones(self.n_var)
         self.xu[0] = 1.0
-        self.func = self.evaluate_
+        self.func = self._evaluate
 
     def calc_pareto_front(self):
         x1 = np.arange(0, 1.01, 0.01)
         return np.array([x1, 1 - np.sqrt(x1)]).T
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         f[:, 0] = x[:, 0]
         g = 1.0
         g += 10 * (self.n_var - 1)
@@ -92,13 +92,13 @@ class ZDT4(ZDT):
 class ZDT6(ZDT):
     def __init__(self, n_var=10):
         ZDT.__init__(self, n_var)
-        self.func = self.evaluate_
+        self.func = self._evaluate
 
     def calc_pareto_front(self):
         x1 = np.linspace(0.2807753191, 1, 100)
         return np.array([x1, 1 - np.power(x1, 2)]).T
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         f[:, 0] = 1 - np.exp(-4 * x[:, 0]) * np.power(np.sin(6 * np.pi * x[:, 0]), 6)
         g = 1 + 9.0 * np.power(np.sum(x[:, 1:], axis=1) / (self.n_var - 1.0), 0.25)
         f[:, 1] = g * (1 - np.power(f[:, 0] / g, 2))

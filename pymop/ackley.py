@@ -11,11 +11,11 @@ class Ackley(Problem):
         self.c3 = C3
         self.n_constr = 0
         self.n_obj = 1
-        self.func = self.evaluate_
+        self.func = self._evaluate
         self.xl = -32 * np.ones(self.n_var)
         self.xu = 32 * np.ones(self.n_var)
 
-    def evaluate_(self, x, f):
+    def _evaluate(self, x, f):
         part1 = -1. * self.c1 * np.exp(-1. * self.c2 * np.sqrt((1. / self.n_var) * np.sum(x * x, axis=1)))
         part2 = -1. * np.exp((1. / self.n_var) * np.sum(np.cos(self.c3 * x), axis=1))
         f[:, 0] = part1 + part2 + self.c1 + np.exp(1)
