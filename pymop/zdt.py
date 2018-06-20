@@ -102,22 +102,3 @@ class ZDT6(ZDT):
         f[:, 0] = 1 - np.exp(-4 * x[:, 0]) * np.power(np.sin(6 * np.pi * x[:, 0]), 6)
         g = 1 + 9.0 * np.power(np.sum(x[:, 1:], axis=1) / (self.n_var - 1.0), 0.25)
         f[:, 1] = g * (1 - np.power(f[:, 0] / g, 2))
-
-class ZDT1_bad(ZDT):
-    def __init__(self, n_var=30):
-        ZDT.__init__(self, n_var)
-
-    def calc_pareto_front(self):
-        x1 = np.arange(0, 1.01, 0.01)
-        return np.array([x1, 1 - np.sqrt(x1)]).T
-
-    def evaluate_(self, x, f):
-        f[:, 0] = x[:, 0]
-        f[:, 0] = -100 + (f[:, 0] * 50)
-        g = 1 + 9.0 / (self.n_var - 1) * np.sum(x[:, 1:], axis=1)
-        f[:, 1] = g * (1 - np.power((x[:, 0] / g), 0.5))
-
-    def pareto_front(self):
-        pf = ZDT1(30).calc_pareto_front()
-        pf[:, 0] = -100 + (pf[:, 0] * 50)
-        return pf
