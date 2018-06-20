@@ -3,7 +3,6 @@ import numpy as np
 from pymop.problem import Problem
 from pymop.util import get_weights
 
-
 class DTLZ(Problem):
     def __init__(self, n_var, n_obj):
         Problem.__init__(self)
