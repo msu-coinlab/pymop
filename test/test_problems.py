@@ -2,20 +2,9 @@ import os
 import unittest
 
 
-import numpy as np
-
 from pymop.dtlz import *
 from pymop.zdt import *
-from pymop.tnk import TNK
-from pymop.rosenbrock import Rosenbrock
-from pymop.rastrigin import Rastrigin
-from pymop.griewank import Griewank
-from pymop.osy import OSY
-from pymop.kursawe import Kursawe
-from pymop.welded_beam import WeldedBeam
-from pymop.carside import Carside
-from pymop.bnh import BNH
-
+from pymop import *
 
 
 def load(name):

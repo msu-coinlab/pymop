@@ -4,8 +4,8 @@ from pymop.problem import Problem
 
 
 class OSY(Problem):
-    def __init__(self, **kwargs):
-        Problem.__init__(self, **kwargs)
+    def __init__(self):
+        Problem.__init__(self)
         self.n_var = 6
         self.n_constr = 6
         self.n_obj = 2

@@ -4,8 +4,8 @@ from pymop.problem import Problem
 
 
 class Carside(Problem):
-    def __init__(self, **kwargs):
-        Problem.__init__(self, **kwargs)
+    def __init__(self):
+        Problem.__init__(self)
         self.n_var = 7
         self.n_constr = 10
         self.n_obj = 3

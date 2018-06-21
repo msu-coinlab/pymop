@@ -4,8 +4,8 @@ from pymop.problem import Problem
 
 
 class Rastrigin(Problem):
-    def __init__(self,n_var=2, A=10, **kwargs):
-        Problem.__init__(self, **kwargs)
+    def __init__(self, n_var=2, A=10.0):
+        Problem.__init__(self)
         self.n_var = n_var
         self.A = A
         self.n_constr = 0
@@ -16,4 +16,4 @@ class Rastrigin(Problem):
 
     def _evaluate(self, x, f):
         z = np.power(x, 2) - self.A * np.cos(2 * np.pi * x)
-        f[:,0] = self.A * self.n_var + np.sum(z, axis=1)
+        f[:, 0] = self.A * self.n_var + np.sum(z, axis=1)

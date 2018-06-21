@@ -35,7 +35,7 @@ def generic_sphere(n_dim):
     return F
 
 class DTLZ1(DTLZ):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
@@ -52,7 +52,7 @@ class DTLZ1(DTLZ):
 
 
 class DTLZ2(DTLZ):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
@@ -65,7 +65,7 @@ class DTLZ2(DTLZ):
 
 
 class DTLZ3(DTLZ):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
@@ -78,7 +78,7 @@ class DTLZ3(DTLZ):
 
 
 class DTLZ4(DTLZ):
-    def __init__(self, n_var, n_obj, alpha=100, d=100):
+    def __init__(self, n_var=10, n_obj=3, alpha=100, d=100):
         super().__init__(n_var, n_obj)
         self.alpha = alpha
         self.d = d
@@ -93,7 +93,7 @@ class DTLZ4(DTLZ):
 
 
 class DTLZ5(DTLZ):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
@@ -109,7 +109,7 @@ class DTLZ5(DTLZ):
 
 
 class DTLZ6(DTLZ):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):
@@ -125,7 +125,7 @@ class DTLZ6(DTLZ):
 
 
 class DTLZ7(DTLZ):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
     def calc_pareto_front(self):

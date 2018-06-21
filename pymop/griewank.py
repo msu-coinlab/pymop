@@ -4,8 +4,8 @@ from pymop.problem import Problem
 
 
 class Griewank(Problem):
-    def __init__(self,n_var=1, **kwargs):
-        Problem.__init__(self, **kwargs)
+    def __init__(self, n_var=2):
+        Problem.__init__(self)
         self.n_var = n_var
         self.n_constr = 0
         self.n_obj = 1
