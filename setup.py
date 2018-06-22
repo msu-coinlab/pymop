@@ -1,10 +1,8 @@
 from setuptools import setup
 
-try:
-    import pypandoc
-    long_description = pypandoc.convert('README.md', 'rst')
-except (IOError, ImportError):
-    long_description = ''
+def readme():
+    with open('README.rst') as f:
+        return f.read()
 
 setup(
     name="pymop",
@@ -12,8 +10,8 @@ setup(
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",
-    long_description=long_description,
-    url="https://github.com/julesy89/pymop",
+    long_description=readme(),
+    url="https://github.com/msu-coinlab/pymop",
     license='MIT',
     keywords="optimization",
     packages=['pymop'],

@@ -4,12 +4,8 @@
    :caption: Contents:
 
 
-
-pymop - Optimization Test Problems
-==================================
-
 Installation
-------------
+==================================
 
 The test problems are uploaded to the PyPi Repository.
 
@@ -17,8 +13,37 @@ The test problems are uploaded to the PyPi Repository.
 
     pip install pymop
 
+Problems
+==================================
+
+In this package single- as well as multi-objective test problems are
+included:
+
+
+-  Single-Objective:
+
+   -  Ackley
+   -  BNH
+   -  Griewank
+   -  Knapsack
+   -  Schwefel
+   -  Sphere
+   -  Zakharov
+
+-  Multi-Objective:
+
+   -  ZDT 1-6 :cite:`zdt2000a`
+   -  DTLZ 1-7 :cite:`dtlz`
+   -  Carside Impact
+   -  BNH
+   -  Kursawe
+   -  OSY
+   -  TNK
+   -  Welded Beam
+
+
 Usage
------
+==================================
 
 .. code:: python
 
@@ -47,42 +72,30 @@ Usage
     problem = WeldedBeam()
     F, CV = problem.evaluate(np.random.random((100, 4)), return_constraints=2)
 
-Problems
---------
-
-In this package single- as well as multi-objective test problems are
-included.
-
--  Single-Objective:
-
-   -  Ackley
-   -  BNH
-   -  Griewank
-   -  Knapsack
-   -  Schwefel
-   -  Sphere
-   -  Zakharov
-
--  Multi-Objective:
-
-   -  DTLZ 1-7
-   -  ZDT 1-6
-   -  Carside Impact
-   -  BNH
-   -  Kursawe
-   -  OSY
-   -  TNK
-   -  Welded Beam
 
 Implementation
---------------
+==================================
 
 All problems are implemented to efficiently evaluate multiple input
 points at a time. Therefore, the input can be a n x m dimensional
 matrix, where n is the number of points to evaluate and m the number of
 variables.
 
-Contact
--------
 
-Feel free to contact me if you have any question: blankjul@egr.msu.edu
+References
+==================================
+
+
+.. bibliography:: references.bib
+   :style: unsrt
+
+Contact
+==================================
+
+Feel free to contact me if you have any question:
+
+| Julian Blank (blankjul [at] egr.msu.edu)
+| Michigan State University
+| Computational Optimization and Innovation Laboratory (COIN)
+| East Lansing, MI 48824, USA
+
