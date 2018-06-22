@@ -1,5 +1,4 @@
 
-
 % check ZDT1
 p = Problem("ZDT1");
 F = p.evaluate(rand(100,p.n_var));
@@ -23,7 +22,6 @@ p = Problem("OSY");
 % check Griewank
 p = Problem("Griewank");
 [F,G] = p.evaluate(rand(100,p.n_var));
-
 
 % check Kursawe
 p = Problem("Kursawe");
