@@ -1,10 +1,3 @@
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-
-
 pymop - Optimization Test Problems
 ==================================
 
