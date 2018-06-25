@@ -1,5 +1,4 @@
 import numpy as np
-import optproblems.wfg
 
 from pymop.problem import Problem
 
@@ -18,6 +17,7 @@ class WFG(Problem):
         self.func = self._evaluate
 
         # the function pointing to the optproblems implementation
+        exec('import optproblems.wfg')
         clazz, = eval('optproblems.wfg.%s' % name),
         self._func = clazz(num_objectives=self.n_obj, num_variables=self.n_var, k=self.k)
 
@@ -75,6 +75,7 @@ class WFG8(WFG):
     def __init__(self, n_var=10, n_obj=3, k=None):
         super().__init__(self.__class__.__name__, n_var, n_obj, k=k)
 
+
 class WFG9(WFG):
     def __init__(self, n_var=10, n_obj=3, k=None):
         super().__init__(self.__class__.__name__, n_var, n_obj, k=k)
@@ -87,7 +88,6 @@ if __name__ == "__main__":
     pf = problem.pareto_front()
 
     fig = plt.figure()
-    from mpl_toolkits.mplot3d import Axes3D
 
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(pf[:, 0], pf[:, 1], pf[:, 2])

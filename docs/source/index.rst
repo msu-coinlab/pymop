@@ -35,8 +35,10 @@ References
    :all:
 
 
-Classes
+API
 ==================================
+
+Each problem is derived from the abstract Problem class:
 
 .. autoclass:: pymop.problem.Problem
    :members:
