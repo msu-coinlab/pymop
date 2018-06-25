@@ -1,12 +1,32 @@
-"""
-This is the base class for a problem is used to define specific problem definitions. 
-If for the given problem the optima are known they can be provided by overwriting the given functions.
-"""
-
 import numpy as np
 
+
 class Problem:
+    """
+    Superclass for each problem that is defined. It provides attributes such
+    as the number of variables, number of objectives or constraints.
+    Also, the lower and upper bounds are stored. If available the Pareto-front, nadir point
+    and ideal point are stored.
+    """
+
     def __init__(self, n_var=0, n_obj=0, n_constr=0, xl=None, xu=None, func=None):
+        """
+
+        Parameters
+        ----------
+        n_var : int
+            number of variables
+        n_obj : int
+            number of objectives
+        n_constr : int
+            number of constraints
+        xl : np.ndarray
+            lower bounds for the variables
+        xu : np.ndarray
+            upper bounds for the variable
+        func : func
+            function that evaluates the problem. Useful if a problem is defined inplace.
+        """
         self.n_var = n_var
         self.n_obj = n_obj
         self.n_constr = n_constr
@@ -17,50 +37,86 @@ class Problem:
 
     # return the maximum objective values of the pareto front
     def nadir_point(self):
+        """
+        Returns
+        -------
+        nadir_point : np.ndarray
+            The nadir point for a multi-objective problem.
+            If single-objective, it returns the best possible solution which is equal to the ideal point.
+
+        """
         return np.max(self.pareto_front(), axis=0)
 
     # return the minimum values of the pareto front
     def ideal_point(self):
+        """
+        Returns
+        -------
+        ideal_point : np.ndarray
+            The ideal point for a multi-objective problem. If single-objective
+            it returns the best possible solution.
+        """
         return np.min(self.pareto_front(), axis=0)
 
-    # return the pareto front
     def pareto_front(self):
+        """
+        Returns
+        -------
+        P : np.ndarray
+            The Pareto front of a given problem. It is only loaded or calculate the first time and then cached.
+            For a single-objective problem only one point is returned but still in a two dimensional array.
+        """
         if self._pareto_front is None:
             self._pareto_front = self.calc_pareto_front()
         return self._pareto_front
 
-    """
-    Evaluate the given problem.
-    
-    The function values set as defined in the function. 
-    The constraint values are meant to be positive if infeasible. A higher positive values means "more" infeasible".
-    If they are 0 or negative, they will be considered as feasible what ever their value is.
-    
-    return_constraints: 0 - No constraints are returned 
-                        1 - All constraints 
-                        2 - Only constraint violations (vector of zeros if problem has no constraints)
-                           
-    """
 
-    def evaluate(self, x, return_constraints=1):
+    def evaluate(self, X, return_constraints=1):
 
-        only_single_value = len(np.shape(x)) == 1
+        """
+        Evaluate the given problem.
+
+        The function values set as defined in the function.
+        The constraint values are meant to be positive if infeasible. A higher positive values means "more" infeasible".
+        If they are 0 or negative, they will be considered as feasible what ever their value is.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            A two dimensional matrix where each row is a point to evaluate and each column a variable.
+
+        return_constraints : int
+                        | 0 - No constraints are returned
+                        | 1 - All constraints
+                        | 2 - Only constraint violations (vector of zeros if problem has no constraints)
+
+        Returns
+        -------
+        F : np.ndarray
+            Objective Values
+        G : np.ndarray
+            Constraint Values. Depending on return_constraints only CV or not at all.
+
+        """
+
+
+        only_single_value = len(np.shape(X)) == 1
         if only_single_value:
-            x = np.array([x])
+            X = np.array([X])
 
         # check the dimensionality of the problem and the given input
-        if x.shape[1] != self.n_var:
-            raise Exception('Input dimension %s are not equal to n_var %s!' % (x.shape[1], self.n_var))
+        if X.shape[1] != self.n_var:
+            raise Exception('Input dimension %s are not equal to n_var %s!' % (X.shape[1], self.n_var))
 
         # create the resulting arrays
-        f = np.zeros((x.shape[0], self.n_obj))
-        g = np.zeros((x.shape[0], self.n_constr))
+        f = np.zeros((X.shape[0], self.n_obj))
+        g = np.zeros((X.shape[0], self.n_constr))
 
         # if constraints exists func(x, f, g) is used otherwise just func(x, f)
         if self.n_constr > 0:
-            self.func(x, f, g)
+            self.func(X, f, g)
         else:
-            self.func(x, f)
+            self.func(X, f)
 
         # convert back if just one vector is evaluated
         if only_single_value:
@@ -75,6 +131,12 @@ class Problem:
 
     # name of the problem
     def name(self):
+        """
+        Returns
+        -------
+        name : str
+            The name of the problem. Per default it is the name of the class but it can be overriden.
+        """
         return self.__class__.__name__
 
     # some problem information

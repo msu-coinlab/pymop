@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+docs/build
+
 ./idea
 .DS_Store
 

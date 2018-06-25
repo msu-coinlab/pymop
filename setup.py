@@ -15,5 +15,5 @@ setup(
     license='MIT',
     keywords="optimization",
     packages=['pymop'],
-    install_requires=['numpy', 'matplotlib', 'scipy']
+    install_requires=['numpy', 'matplotlib', 'scipy', 'optproblems', 'diversipy']
 )
