@@ -15,9 +15,9 @@ included:
 
 -  Multi-Objective:
 
-   -  ZDT 1-6 :cite:`zdt2000a`
-   -  DTLZ 1-7 :cite:`dtlz`
-   -  WFG 1-9 :cite:`wfg2006` (optproblems)
+   -  ZDT 1-6
+   -  DTLZ 1-7
+   -  WFG 1-9
    -  Carside Impact
    -  BNH
    -  Kursawe
