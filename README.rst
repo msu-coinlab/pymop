@@ -35,7 +35,7 @@ included:
    -  Carside Impact
    -  BNH
    -  Kursawe
-   -  OSY`
+   -  OSY
    -  TNK
    -  Welded Beam
 
