@@ -39,7 +39,7 @@ class DTLZ1(DTLZ):
     def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         return get_uniform_weights(self.n_obj * 200, self.n_obj)
 
     def _evaluate(self, x, f):
@@ -56,7 +56,7 @@ class DTLZ2(DTLZ):
     def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         return generic_sphere(self.n_obj)
 
     def _evaluate(self, x, f):
@@ -69,7 +69,7 @@ class DTLZ3(DTLZ):
     def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         return generic_sphere(self.n_obj)
 
     def _evaluate(self, x, f):
@@ -84,7 +84,7 @@ class DTLZ4(DTLZ):
         self.alpha = alpha
         self.d = d
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         return generic_sphere(self.n_obj)
 
     def _evaluate(self, x, f):
@@ -97,7 +97,7 @@ class DTLZ5(DTLZ):
     def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         pass
 
     def _evaluate(self, x, f):
@@ -113,7 +113,7 @@ class DTLZ6(DTLZ):
     def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         pass
 
     def _evaluate(self, x, f):
@@ -129,7 +129,7 @@ class DTLZ7(DTLZ):
     def __init__(self, n_var=10, n_obj=3):
         super().__init__(n_var, n_obj)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         pass
 
     def _evaluate(self, x, f):

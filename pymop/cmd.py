@@ -77,7 +77,7 @@ if __name__ == "__main__":
         np.savetxt(sys.stdout, F, fmt='%.18e', delimiter=' ')
 
     elif par_func == 'front':
-        np.savetxt(par_out, problem.calc_pareto_front(), fmt='%.18e', delimiter=' ')
+        np.savetxt(par_out, problem._calc_pareto_front(), fmt='%.18e', delimiter=' ')
 
     elif par_func == 'info':
         import json

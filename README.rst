@@ -29,13 +29,13 @@ included:
 
 -  Multi-Objective:
 
-   -  ZDT 1-6
-   -  DTLZ 1-7
-   -  WFG 1-9
+   -  ZDT 1-6 
+   -  DTLZ 1-7 
+   -  WFG 1-9 
    -  Carside Impact
    -  BNH
    -  Kursawe
-   -  OSY
+   -  OSY`
    -  TNK
    -  Welded Beam
 

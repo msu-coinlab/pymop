@@ -1,11 +1,8 @@
 import os
 import unittest
 
-
-from pymop.dtlz import *
-from pymop.zdt import *
 from pymop import *
-
+import numpy as np
 
 def load(name):
     X = np.loadtxt(name + '.x')

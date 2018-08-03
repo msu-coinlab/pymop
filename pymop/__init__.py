@@ -1,9 +1,15 @@
+import os
+
 __all__ = []
 
-import pkgutil
 import inspect
+import pkgutil
+import os
 
-for loader, name, is_pkg in pkgutil.walk_packages(__path__):
+
+problem_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'problems')
+
+for loader, name, is_pkg in pkgutil.walk_packages([problem_dir]):
     module = loader.find_module(name).load_module(name)
 
     for name, value in inspect.getmembers(module):

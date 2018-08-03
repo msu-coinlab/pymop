@@ -141,6 +141,7 @@ latex_elements = {
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
+    'extraclassoptions' : 'openany',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -148,7 +149,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'pymop.tex', 'pymop Documentation',
-     'Julian Blank', 'manual'),
+     'Julian Blank', 'howto'),
 ]
 
 

@@ -18,7 +18,7 @@ class ZDT1(ZDT):
     def __init__(self, n_var=30):
         ZDT.__init__(self, n_var)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         x1 = np.arange(0, 1.01, 0.01)
         return np.array([x1, 1 - np.sqrt(x1)]).T
 
@@ -32,7 +32,7 @@ class ZDT2(ZDT):
     def __init__(self, n_var=30):
         ZDT.__init__(self, n_var)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         x1 = np.arange(0, 1.01, 0.01)
         return np.array([x1, 1 - np.power(x1, 2)]).T
 
@@ -47,7 +47,7 @@ class ZDT3(ZDT):
     def __init__(self, n_var=30):
         ZDT.__init__(self, n_var)
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         regions = [[0, 0.0830015349], [0.182228780, 0.2577623634],
                    [0.4093136748, 0.4538821041], [0.6183967944, 0.6525117038],
                    [0.8233317983, 0.8518328654]]
@@ -75,7 +75,7 @@ class ZDT4(ZDT):
         self.xu[0] = 1.0
         self.func = self._evaluate
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         x1 = np.arange(0, 1.01, 0.01)
         return np.array([x1, 1 - np.sqrt(x1)]).T
 
@@ -94,7 +94,7 @@ class ZDT6(ZDT):
         ZDT.__init__(self, n_var)
         self.func = self._evaluate
 
-    def calc_pareto_front(self):
+    def _calc_pareto_front(self):
         x1 = np.linspace(0.2807753191, 1, 100)
         return np.array([x1, 1 - np.power(x1, 2)]).T
 

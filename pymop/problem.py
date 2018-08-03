@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 
 
@@ -67,7 +69,7 @@ class Problem:
             For a single-objective problem only one point is returned but still in a two dimensional array.
         """
         if self._pareto_front is None:
-            self._pareto_front = self.calc_pareto_front()
+            self._pareto_front = self._calc_pareto_front()
         return self._pareto_front
 
 
@@ -139,6 +141,23 @@ class Problem:
         """
         return self.__class__.__name__
 
+    def _calc_pareto_front(self):
+        """
+        Default behaviour is look to look for the pareto front file.
+        If this does not exist return None.
+
+        Returns
+        -------
+        pf : numpy.array
+            Pareto optimal front for the problem. In case of single-objective just one value
+
+        """
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        fname = os.path.join(current_dir, "pf", "%s.pf" % self.__class__.__name__)
+        if os.path.isfile(fname):
+            return np.loadtxt(fname)
+        return None
+
     # some problem information
     def __str__(self):
         s = "# name: %s\n" % self.name()
@@ -153,12 +172,15 @@ class Problem:
     @staticmethod
     def calc_constraint_violation(G):
         if G.shape[1] == 0:
-            return np.zeros(G.shape[0])
+            return np.zeros(G.shape[0])[:, None]
         else:
             return np.sum(G * (G > 0).astype(np.float), axis=1)[:, None]
 
 
 if __name__ == "__main__":
+
+    from pymop.kursawe import Kursawe
+    k = Kursawe()
 
     # numpy arrays are required as an input
     import numpy as np
