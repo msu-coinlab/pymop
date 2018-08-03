@@ -49,6 +49,7 @@ def plot_problem_surface(problem):
 
 
 if __name__ == '__main__':
+    from pymop import *
     plot_problem_surface(Ackley(n_var=1))
 
 

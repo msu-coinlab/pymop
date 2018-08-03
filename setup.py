@@ -6,7 +6,7 @@ def readme():
 
 setup(
     name="pymop",
-    version="0.1.2-dev",
+    version="0.1.2-dev2",
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",
@@ -15,5 +15,5 @@ setup(
     license='MIT',
     keywords="optimization",
     packages=['pymop', 'pymop/problems'],
-    install_requires=['numpy', 'matplotlib', 'scipy', 'optproblems', 'diversipy']
+    install_requires=['numpy', 'matplotlib', 'scipy', 'optproblems']
 )

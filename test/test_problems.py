@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from pymop import *
+from pymop.problems import *
 import numpy as np
 
 def load(name):
