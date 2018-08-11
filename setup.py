@@ -6,7 +6,7 @@ def readme():
 
 setup(
     name="pymop",
-    version="0.2.0",
+    version="0.2.0-dev",
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",
