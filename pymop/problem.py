@@ -1,5 +1,4 @@
 import os
-
 import numpy as np
 
 
@@ -72,8 +71,7 @@ class Problem:
             self._pareto_front = self._calc_pareto_front()
         return self._pareto_front
 
-
-    def evaluate(self, X, return_constraints=1):
+    def evaluate(self, X, return_constraint_violation=True, return_constraints=False):
 
         """
         Evaluate the given problem.
@@ -87,20 +85,23 @@ class Problem:
         X : np.ndarray
             A two dimensional matrix where each row is a point to evaluate and each column a variable.
 
-        return_constraints : int
-                        | 0 - No constraints are returned
-                        | 1 - All constraints
-                        | 2 - Only constraint violations (vector of zeros if problem has no constraints)
+        return_constraint_violation : bool
+            Whether the constraint violation is returned or not. If no constraint exists,
+            an array with zero values is returned. Default: True.
+            
+        return_constraints : bool
+            Whether all constraint values are returned or not. Default: False.
 
         Returns
         -------
         F : np.ndarray
             Objective Values
+        CV : np.ndarray
+            Constraint Violations as a one dimensional array.
         G : np.ndarray
-            Constraint Values. Depending on return_constraints only CV or not at all.
+            Constraints as a two dimensional array.
 
         """
-
 
         only_single_value = len(np.shape(X)) == 1
         if only_single_value:
@@ -120,16 +121,18 @@ class Problem:
         else:
             self.func(X, f)
 
+        # create the returned values in a list
+        vals = [f]
+        if return_constraint_violation:
+            vals.append(Problem.calc_constraint_violation(g))
+        if return_constraints:
+            vals.append(g)
+
         # convert back if just one vector is evaluated
         if only_single_value:
-            return f[0, :], g[0, :]
+            vals = [e[0, :] for e in vals]
 
-        if return_constraints == 0:
-            return f
-        elif return_constraints == 1:
-            return f, g
-        elif return_constraints == 2:
-            return f, Problem.calc_constraint_violation(g)
+        return tuple(vals)
 
     # name of the problem
     def name(self):
@@ -171,14 +174,15 @@ class Problem:
 
     @staticmethod
     def calc_constraint_violation(G):
-        if G.shape[1] == 0:
+        if G is None:
+            return None
+        elif G.shape[1] == 0:
             return np.zeros(G.shape[0])[:, None]
         else:
             return np.sum(G * (G > 0).astype(np.float), axis=1)[:, None]
 
 
 if __name__ == "__main__":
-
     # numpy arrays are required as an input
     import numpy as np
 
@@ -196,10 +200,13 @@ if __name__ == "__main__":
     F, G = problem.evaluate(np.random.random((100, 10)))
 
     # if no constraints should be returned
-    F = problem.evaluate(np.random.random((100, 10)), return_constraints=0)
+    F = problem.evaluate(np.random.random((100, 10)), return_constraint_violation=False)
+
+    problem.n_pareto_points = 92
+    print(problem.pareto_front().shape)
 
     # if only the constraint violation should be returned - vector of zeros if no constraints exist
     from pymop.problems.welded_beam import WeldedBeam
 
     problem = WeldedBeam()
-    F, CV = problem.evaluate(np.random.random((100, 4)), return_constraints=2)
+    F, CV = problem.evaluate(np.random.random((100, 4)))

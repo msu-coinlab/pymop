@@ -1,6 +1,5 @@
-from scipy import special
-
 import numpy as np
+from scipy import special
 
 
 # returns the closest possible number of references lines to given one
@@ -53,7 +52,6 @@ if __name__ == "__main__":
     w = DTLZ2(10, 3)._calc_pareto_front()
 
     fig = plt.figure()
-    from mpl_toolkits.mplot3d import Axes3D
 
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(w[:, 0], w[:, 1], w[:, 2])

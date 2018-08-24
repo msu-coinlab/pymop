@@ -1,3 +1,4 @@
+import setuptools
 from setuptools import setup
 
 def readme():
@@ -14,6 +15,6 @@ setup(
     url="https://github.com/msu-coinlab/pymop",
     license='MIT',
     keywords="optimization",
-    packages=['pymop', 'pymop/problems'],
+    packages=setuptools.find_packages(),
     install_requires=['numpy', 'matplotlib', 'scipy', 'optproblems']
 )

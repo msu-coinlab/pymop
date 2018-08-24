@@ -10,7 +10,7 @@ class TNK(Problem):
         self.n_constr = 2
         self.n_obj = 2
         self.func = self._evaluate
-        self.xl = np.array([0, 0])
+        self.xl = np.array([0, 1e-30])
         self.xu = np.array([np.pi, np.pi])
 
     def _evaluate(self, x, f, g):
