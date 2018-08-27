@@ -134,13 +134,12 @@ class Problem:
 
         return tuple(vals)
 
-    # name of the problem
     def name(self):
         """
         Returns
         -------
         name : str
-            The name of the problem. Per default it is the name of the class but it can be overriden.
+            The name of the problem. Per default it is the name of the class but it can be overridden.
         """
         return self.__class__.__name__
 
@@ -156,7 +155,7 @@ class Problem:
 
         """
         current_dir = os.path.dirname(os.path.realpath(__file__))
-        fname = os.path.join(current_dir, "pf", "%s.pf" % self.__class__.__name__)
+        fname = os.path.join(current_dir, "pf", "%s.pf" % self.name())
         if os.path.isfile(fname):
             return np.loadtxt(fname)
         return None
