@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import inspect
 
 
 class Problem:
@@ -71,7 +72,7 @@ class Problem:
             self._pareto_front = self._calc_pareto_front()
         return self._pareto_front
 
-    def evaluate(self, X, return_constraint_violation=True, return_constraints=False):
+    def evaluate(self, X, return_constraint_violation=True, return_constraints=False, **kwargs):
 
         """
         Evaluate the given problem.
@@ -116,10 +117,29 @@ class Problem:
         g = np.zeros((X.shape[0], self.n_constr))
 
         # if constraints exists func(x, f, g) is used otherwise just func(x, f)
-        if self.n_constr > 0:
-            self.func(X, f, g)
+        params = inspect.signature(self.func).parameters
+
+        if 'individuals' in kwargs:
+            individuals = kwargs.pop('individuals')
         else:
-            self.func(X, f)
+            individuals = None
+
+        _kwargs = {}
+        for key, value in kwargs.items():
+            if key in params:
+                _kwargs[key] = value
+
+        args = [X, f]
+
+        if self.n_constr > 0:
+            args.append(g)
+            if len(params) == 4:
+                args.append(individuals)
+        else:
+            if len(params) == 3:
+                args.append(individuals)
+
+        self.func(*args, **_kwargs)
 
         # create the returned values in a list
         vals = [f]

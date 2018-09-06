@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
 
 from pymop.problems.ackley import Ackley
 
@@ -49,7 +48,6 @@ def plot_problem_surface(problem):
 
 
 if __name__ == '__main__':
-    from pymop import *
     plot_problem_surface(Ackley(n_var=1))
 
 
