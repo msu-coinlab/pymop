@@ -1,14 +1,10 @@
 .. code:: python
 
-    if __name__ == "__main__":
-
-        # numpy arrays are required as an input
+    def evaluate():
         import numpy as np
 
-        # first import the specific problem to be solved
-        from pymop.problems.dtlz import DTLZ1
-
         # initialize it with the necessary parameters
+        from pymop.problems.dtlz import DTLZ1
         problem = DTLZ1(n_var=10, n_obj=3)
 
         # evaluation function returns by default two numpy arrays - objective function values and constraints -
@@ -21,8 +17,12 @@
         # if no constraints should be returned
         F = problem.evaluate(np.random.random((100, 10)), return_constraint_violation=False)
 
-        # if only the constraint violation should be returned - vector of zeros if no constraints exist
         from pymop.problems.welded_beam import WeldedBeam
+        F, CV = WeldedBeam().evaluate(np.random.random((100, 4)), return_constraint_violation=True)
 
-        problem = WeldedBeam()
-        F, CV = problem.evaluate(n
+
+    def plot():
+        from pymop import plot_problem_surface, Ackley
+        plot_problem_surface(Ackley(n_var=1), 200)
+        plot_problem_surface(Ackley(n_var=2), 200, plot_type="wireframe")
+        plot_problem_surface(Ackley(n_var=2), 200, plot_type="contour")

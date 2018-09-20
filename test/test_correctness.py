@@ -1,16 +1,18 @@
-import os
 import unittest
 
-from pymop.problems import *
-import numpy as np
+from pymop import *
+
 
 def load(name):
-    X = np.loadtxt(name + '.x')
-    F = np.loadtxt(name + '.f')
+
+    path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "resources")
+
+    X = np.loadtxt(os.path.join(path, "%s.x" % name))
+    F = np.loadtxt(os.path.join(path, "%s.f" % name))
 
     G = None
-    if os.path.exists(name + '.g'):
-        G = np.loadtxt(name + '.g')
+    if os.path.exists(os.path.join(path, "%s.g" % name)):
+        G = np.loadtxt(os.path.join(path, "%s.g" % name))
 
     return X, F, G
 
@@ -24,12 +26,12 @@ problems = [
 ]
 
 
-class ProblemTest(unittest.TestCase):
+class CorrectnessTest(unittest.TestCase):
 
     def test_problems(self):
         for entry in problems:
             name, params = entry
-            print("Testing: " + name)
+            #print("Testing: " + name)
 
             X, F, CV = load(name)
             problem = globals()[name](*params)

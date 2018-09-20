@@ -1,13 +1,17 @@
-__all__ = []
-
-import inspect
-import pkgutil
-
-for loader, name, is_pkg in pkgutil.walk_packages(__path__):
-    module = loader.find_module(name).load_module(name)
-
-    for name, value in inspect.getmembers(module):
-        if name.startswith('__'):
-            continue
-        globals()[name] = value
-        __all__.append(name)
+from pymop.problems.ackley import *
+from pymop.problems.bnh import *
+from pymop.problems.carside import *
+from pymop.problems.dtlz import *
+from pymop.problems.griewank import *
+from pymop.problems.knapsack import *
+from pymop.problems.kursawe import *
+from pymop.problems.osy import *
+from pymop.problems.rastrigin import *
+from pymop.problems.rosenbrock import *
+from pymop.problems.schwefel import *
+from pymop.problems.sphere import *
+from pymop.problems.tnk import *
+from pymop.problems.trust_2d import *
+from pymop.problems.welded_beam import *
+from pymop.problems.zakharov import *
+from pymop.problems.zdt import *

@@ -5,13 +5,13 @@ Installation
 ==================================
 {% include 'source/_installation.rst' %}
 
-Problems
-==================================
-{% include 'source/_problems.rst' %}
-
 Usage
 ==================================
 {% include 'source/_usage.rst' %}
+
+Problems
+==================================
+{% include 'source/_problems.rst' %}
 
 Contact
 ==================================

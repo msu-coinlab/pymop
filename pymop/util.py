@@ -1,57 +1,86 @@
 import numpy as np
-from scipy import special
 
 
-# returns the closest possible number of references lines to given one
-def get_uniform_weights(n_points, n_dim, max_sections=300):
-    def n_uniform_weights(n_obj, n_sections):
-        return int(special.binom(n_obj + n_sections - 1, n_sections))
+def get_uniform_weights(n_points, n_dim):
+    return UniformReferenceDirectionFactory(n_dim, n_points=n_points).do()
 
-    def get_ref_dirs_from_section(n_obj, n_sections):
 
-        if n_obj == 1:
-            return np.array([1.0])
+def binomial(n, k):
+    if 0 <= k <= n:
+        ntok = 1
+        ktok = 1
+        for t in range(1, min(k, n - k) + 1):
+            ntok *= n
+            ktok *= t
+            n -= 1
+        return ntok // ktok
+    else:
+        return 0
 
-        # all possible values for the vector
-        sections = np.linspace(0, 1, num=n_sections + 1)[::-1]
 
-        ref_dirs = []
-        ref_recursive([], sections, 0, n_obj, ref_dirs)
-        return np.array(ref_dirs)
+class UniformReferenceDirectionFactory:
 
-    def ref_recursive(v, sections, level, max_level, result):
-        v_sum = np.sum(np.array(v))
+    def __init__(self, n_dim, n_points=None, n_partitions=None) -> None:
 
-        # sum slightly above or below because of numerical issues
-        if v_sum > 1.0001:
-            return
-        elif level == max_level:
-            if 1.0 - v_sum < 0.0001:
-                result.append(v)
+        self.n_dim = n_dim
+        if n_points is not None:
+            self.n_partitions = UniformReferenceDirectionFactory.get_partition_closest_to_points(n_points, n_dim)
         else:
-            for e in sections:
-                next = list(v)
-                next.append(e)
-                ref_recursive(next, sections, level + 1, max_level, result)
+            if n_partitions is None:
+                raise Exception("Either provide number of partitions or number of points.")
+            else:
+                self.n_partitions = n_partitions
 
-    # Generates uniform distribution of reference points
-    n_sections = np.array([n_uniform_weights(n_dim, i) for i in range(max_sections)])
-    idx = np.argmin((n_sections <= n_points).astype(np.int))
-    M = get_ref_dirs_from_section(n_dim, idx - 1)
+    def do(self):
+        return self.uniform_reference_directions(self.n_partitions, self.n_dim)
 
-    return M
+    @staticmethod
+    def get_partition_closest_to_points(n_points, n_dim):
+
+        # in this case the do method will always return one values anyway
+        if n_dim == 1:
+            return 0
+
+        n_partitions = 1
+        _n_points = UniformReferenceDirectionFactory.get_n_points(n_partitions, n_dim)
+        while _n_points <= n_points:
+            n_partitions += 1
+            _n_points = UniformReferenceDirectionFactory.get_n_points(n_partitions, n_dim)
+        return n_partitions - 1
+
+    @staticmethod
+    def get_n_points(n_partitions, n_dim):
+        return int(binomial(n_dim + n_partitions - 1, n_partitions))
+
+    def uniform_reference_directions(self, n_partitions, n_dim):
+        ref_dirs = []
+        ref_dir = np.full(n_dim, np.inf)
+        self.__uniform_reference_directions(ref_dirs, ref_dir, n_partitions, n_partitions, 0)
+        return np.concatenate(ref_dirs, axis=0)
+
+    def __uniform_reference_directions(self, ref_dirs, ref_dir, n_partitions, beta, depth):
+        if depth == len(ref_dir) - 1:
+            ref_dir[depth] = beta / (1.0 * n_partitions)
+            ref_dirs.append(ref_dir[None, :])
+        else:
+            for i in range(beta + 1):
+                ref_dir[depth] = 1.0 * i / (1.0 * n_partitions)
+                self.__uniform_reference_directions(ref_dirs, np.copy(ref_dir), n_partitions, beta - i,
+                                                    depth + 1)
 
 
 if __name__ == "__main__":
-    w = get_uniform_weights(100, 3)
+    w = get_uniform_weights(200, 3)
+    # w = UniformReferenceDirectionFactory(3, n_points=100).do()
 
     import matplotlib.pyplot as plt
 
-    from pymop.dtlz import DTLZ2
+    from pymop import *
 
-    w = DTLZ2(10, 3)._calc_pareto_front()
+    w = DTLZ5(10, 3, n_pareto_points=91).pareto_front()
 
     fig = plt.figure()
+    from mpl_toolkits.mplot3d import Axes3D
 
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(w[:, 0], w[:, 1], w[:, 2])

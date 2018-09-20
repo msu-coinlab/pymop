@@ -1,23 +1,21 @@
-import matplotlib.pyplot as plt
 import numpy as np
 
-from pymop.problems.ackley import Ackley
 
-
-def plot_problem_surface(problem):
-
-    # number of points to be sampled
-    n_samples = 300
+def plot_problem_surface(problem, n_samples, plot_type="wireframe"):
+    try:
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+    except:
+        raise Exception("Please install 'matplotlib' to use the plotting functionality.")
 
     if problem.n_var == 1 and problem.n_obj == 1:
-        X = np.linspace(problem.xl[0], problem.xu[0], num=n_samples)[:,None]
-        Y = problem.evaluate(X, return_constraints=0)
-        plt.plot(X,Y)
+
+        X = np.linspace(problem.xl[0], problem.xu[0], num=n_samples)[:, None]
+        Y = problem.evaluate(X, return_constraint_violation=False)
+        plt.plot(X, Y)
 
     elif problem.n_var == 2 and problem.n_obj == 1:
 
-        fig = plt.figure(1)
-        plot = fig.add_subplot(111, projection='3d')
 
         X_range = np.linspace(problem.xl[0], problem.xu[0], num=n_samples)
         Y_range = np.linspace(problem.xl[1], problem.xu[1], num=n_samples)
@@ -31,24 +29,22 @@ def plot_problem_surface(problem):
                 A[counter, 1] = y
                 counter += 1
 
+        F = np.reshape(problem.evaluate(A, return_constraint_violation=False), (n_samples, n_samples))
 
-        F = np.reshape(problem.evaluate(A, return_constraints=0), (n_samples, n_samples))
-
+        fig = plt.figure()
         # Plot the surface.
-        # CS = plot.contour(X, Y, F)
-        # plt.colorbar(CS)
 
-        # plot.plot_countour(X, Y, F, cmap=cm.coolwarm, linewidth=0, antialiased=False)
-        plot.plot_wireframe(X, Y, F)
+        if plot_type == "wireframe":
+            ax = fig.add_subplot(111, projection='3d')
+            ax.plot_wireframe(X, Y, F)
+        elif plot_type == "contour":
+            CS = plt.contour(X, Y, F)
+            plt.clabel(CS, inline=1, fontsize=10)
+        else:
+            raise Exception("Unknown plotting method.")
+
 
     else:
         raise Exception("Can only plot problems with less than two variables and one objective.")
 
     plt.show()
-
-
-if __name__ == '__main__':
-    plot_problem_surface(Ackley(n_var=1))
-
-
-

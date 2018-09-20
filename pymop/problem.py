@@ -70,6 +70,10 @@ class Problem:
         """
         if self._pareto_front is None:
             self._pareto_front = self._calc_pareto_front()
+
+            if self._pareto_front is None:
+                raise Exception("Pareto front for this test problem not found.")
+
         return self._pareto_front
 
     def evaluate(self, X, return_constraint_violation=True, return_constraints=False, **kwargs):
@@ -119,6 +123,7 @@ class Problem:
         # if constraints exists func(x, f, g) is used otherwise just func(x, f)
         params = inspect.signature(self.func).parameters
 
+        # optionally allow to have individuals also as a parameter and call the subfunction not in kwargs
         if 'individuals' in kwargs:
             individuals = kwargs.pop('individuals')
         else:
@@ -152,7 +157,10 @@ class Problem:
         if only_single_value:
             vals = [e[0, :] for e in vals]
 
-        return tuple(vals)
+        if len(vals) > 1:
+            return tuple(vals)
+        else:
+            return vals[0]
 
     def name(self):
         """
@@ -201,31 +209,43 @@ class Problem:
             return np.sum(G * (G > 0).astype(np.float), axis=1)[:, None]
 
 
-if __name__ == "__main__":
-    # numpy arrays are required as an input
-    import numpy as np
+class ScaledProblem(Problem):
 
-    # first import the specific problem to be solved
-    from pymop.problems.dtlz import DTLZ1
+    def __init__(self, problem, scale_factor):
+        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
+        self.problem = problem
+        self.scale_factor = scale_factor
 
-    # initialize it with the necessary parameters
-    problem = DTLZ1(n_var=10, n_obj=3)
+    @staticmethod
+    def get_scale(n, scale_factor):
+        return np.power(np.full(n, scale_factor), np.arange(n))
 
-    # evaluation function returns by default two numpy arrays - objective function values and constraints -
-    # as input either provide a vector
-    F, G = problem.evaluate(np.random.random(10))
+    def evaluate(self, X, **kwargs):
+        t = self.problem.evaluate(X, **kwargs)
+        F = t[0] * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
+        return tuple([F] + list(t)[1:])
 
-    # or a whole matrix to evaluate several solutions at once
-    F, G = problem.evaluate(np.random.random((100, 10)))
+    def _calc_pareto_front(self):
+        return self.problem.pareto_front() * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
 
-    # if no constraints should be returned
-    F = problem.evaluate(np.random.random((100, 10)), return_constraint_violation=False)
 
-    problem.n_pareto_points = 92
-    print(problem.pareto_front().shape)
+class ConvexProblem(Problem):
 
-    # if only the constraint violation should be returned - vector of zeros if no constraints exist
-    from pymop.problems.welded_beam import WeldedBeam
+    def __init__(self, problem):
+        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
+        self.problem = problem
 
-    problem = WeldedBeam()
-    F, CV = problem.evaluate(np.random.random((100, 4)))
+    @staticmethod
+    def get_power(n):
+        p = np.full(n, 4.0)
+        p[-1] = 2.0
+        return p
+
+    def evaluate(self, X, **kwargs):
+        t = self.problem.evaluate(X, **kwargs)
+        F = np.power(t[0], ConvexProblem.get_power(self.n_obj))
+        return tuple([F] + list(t)[1:])
+
+    def _calc_pareto_front(self):
+        F = self.problem.pareto_front()
+        return np.power(F, ConvexProblem.get_power(self.n_obj))

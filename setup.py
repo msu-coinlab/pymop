@@ -1,13 +1,14 @@
-import setuptools
-from setuptools import setup
+from setuptools import setup, find_packages
+
 
 def readme():
     with open('README.rst') as f:
         return f.read()
 
+
 setup(
     name="pymop",
-    version="0.2.0-dev",
+    version="0.2.1",
     author="Julian Blank",
     author_email="blankjul@egr.msu.edu",
     description="Optimization Test Problems",
@@ -15,6 +16,7 @@ setup(
     url="https://github.com/msu-coinlab/pymop",
     license='MIT',
     keywords="optimization",
-    packages=setuptools.find_packages(),
-    install_requires=['numpy', 'matplotlib', 'scipy', 'optproblems']
+    install_requires=['numpy'],
+    packages=find_packages(exclude=['test', 'docs']),
+    include_package_data=True,
 )

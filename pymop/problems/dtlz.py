@@ -5,7 +5,7 @@ from pymop.util import get_uniform_weights
 
 
 class DTLZ(Problem):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var, n_obj, n_pareto_points=None):
         Problem.__init__(self)
         self.n_obj = n_obj
         self.n_var = n_var
@@ -15,7 +15,7 @@ class DTLZ(Problem):
         self.xu = np.ones(self.n_var)
 
         self.k = self.n_var - self.n_obj + 1
-        self.n_pareto_points = 200 * n_obj
+        self.n_pareto_points = n_pareto_points
 
     def g1(self, X_M):
         return 100 * (self.k + np.sum(np.square(X_M - 0.5) - np.cos(20 * np.pi * (X_M - 0.5)), axis=1))
@@ -30,18 +30,25 @@ class DTLZ(Problem):
             if i > 0:
                 f[:, i] *= np.sin(np.power(X_[:, X_.shape[1] - i], alpha) * np.pi / 2.0)
 
+    def pareto_front(self):
+        if self.n_pareto_points is None:
+            raise Exception("Please specify how many pareto-optimal points are desired by setting n_pareto_points!")
+
+        return super().pareto_front()
+
 
 def generic_sphere(n_points, n_dim):
     w = get_uniform_weights(n_points, n_dim)
     F = w / np.tile(np.linalg.norm(w, axis=1)[:, None], (1, w.shape[1]))
     return F
 
+
 class DTLZ1(DTLZ):
-    def __init__(self, n_var=10, n_obj=3):
-        super().__init__(n_var, n_obj)
+    def __init__(self, n_var=10, n_obj=3, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
-        return get_uniform_weights(self.n_pareto_points, self.n_obj)
+        return 0.5 * get_uniform_weights(self.n_pareto_points, self.n_obj)
 
     def _evaluate(self, x, f):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
@@ -54,8 +61,8 @@ class DTLZ1(DTLZ):
 
 
 class DTLZ2(DTLZ):
-    def __init__(self, n_var=10, n_obj=3):
-        super().__init__(n_var, n_obj)
+    def __init__(self, n_var=10, n_obj=3, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
         return generic_sphere(self.n_pareto_points, self.n_obj)
@@ -67,8 +74,8 @@ class DTLZ2(DTLZ):
 
 
 class DTLZ3(DTLZ):
-    def __init__(self, n_var=10, n_obj=3):
-        super().__init__(n_var, n_obj)
+    def __init__(self, n_var=10, n_obj=3, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
         return generic_sphere(self.n_pareto_points, self.n_obj)
@@ -80,8 +87,8 @@ class DTLZ3(DTLZ):
 
 
 class DTLZ4(DTLZ):
-    def __init__(self, n_var=10, n_obj=3, alpha=100, d=100):
-        super().__init__(n_var, n_obj)
+    def __init__(self, n_var=10, n_obj=3, alpha=100, d=100, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
         self.alpha = alpha
         self.d = d
 
@@ -95,8 +102,8 @@ class DTLZ4(DTLZ):
 
 
 class DTLZ5(DTLZ):
-    def __init__(self, n_var=10, n_obj=3):
-        super().__init__(n_var, n_obj)
+    def __init__(self, n_var=10, n_obj=3, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
         pass
@@ -111,8 +118,8 @@ class DTLZ5(DTLZ):
 
 
 class DTLZ6(DTLZ):
-    def __init__(self, n_var=10, n_obj=3):
-        super().__init__(n_var, n_obj)
+    def __init__(self, n_var=10, n_obj=3, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
         pass
@@ -127,11 +134,8 @@ class DTLZ6(DTLZ):
 
 
 class DTLZ7(DTLZ):
-    def __init__(self, n_var=10, n_obj=3):
-        super().__init__(n_var, n_obj)
-
-    def _calc_pareto_front(self):
-        pass
+    def __init__(self, n_var=10, n_obj=3, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
 
     def _evaluate(self, x, f):
         for i in range(0, self.n_obj - 1):
@@ -140,3 +144,6 @@ class DTLZ7(DTLZ):
         g = 1 + 9 / self.k * np.sum(x[:, -self.k:], axis=1)
         h = self.n_obj - np.sum(f[:, :-1] / (1 + g[:, None]) * (1 + np.sin(3 * np.pi * f[:, :-1])), axis=1)
         f[:, self.n_obj - 1] = (1 + g) * h
+
+
+

@@ -18,6 +18,37 @@ For the current development version:
     cd pymop
     python setup.py install
 
+Usage
+==================================
+.. code:: python
+
+    def evaluate():
+        import numpy as np
+
+        # initialize it with the necessary parameters
+        from pymop.problems.dtlz import DTLZ1
+        problem = DTLZ1(n_var=10, n_obj=3)
+
+        # evaluation function returns by default two numpy arrays - objective function values and constraints -
+        # as input either provide a vector
+        F, G = problem.evaluate(np.random.random(10))
+
+        # or a whole matrix to evaluate several solutions at once
+        F, G = problem.evaluate(np.random.random((100, 10)))
+
+        # if no constraints should be returned
+        F = problem.evaluate(np.random.random((100, 10)), return_constraint_violation=False)
+
+        from pymop.problems.welded_beam import WeldedBeam
+        F, CV = WeldedBeam().evaluate(np.random.random((100, 4)), return_constraint_violation=True)
+
+
+    def plot():
+        from pymop import plot_problem_surface, Ackley
+        plot_problem_surface(Ackley(n_var=1), 200)
+        plot_problem_surface(Ackley(n_var=2), 200, plot_type="wireframe")
+        plot_problem_surface(Ackley(n_var=2), 200, plot_type="contour")
+
 Problems
 ==================================
 
@@ -46,37 +77,6 @@ included:
    -  OSY`
    -  TNK
    -  Welded Beam
-
-Usage
-==================================
-.. code:: python
-
-    if __name__ == "__main__":
-
-        # numpy arrays are required as an input
-        import numpy as np
-
-        # first import the specific problem to be solved
-        from pymop.problems.dtlz import DTLZ1
-
-        # initialize it with the necessary parameters
-        problem = DTLZ1(n_var=10, n_obj=3)
-
-        # evaluation function returns by default two numpy arrays - objective function values and constraints -
-        # as input either provide a vector
-        F, G = problem.evaluate(np.random.random(10))
-
-        # or a whole matrix to evaluate several solutions at once
-        F, G = problem.evaluate(np.random.random((100, 10)))
-
-        # if no constraints should be returned
-        F = problem.evaluate(np.random.random((100, 10)), return_constraint_violation=False)
-
-        # if only the constraint violation should be returned - vector of zeros if no constraints exist
-        from pymop.problems.welded_beam import WeldedBeam
-
-        problem = WeldedBeam()
-        F, CV = problem.evaluate(n
 
 Contact
 ==================================

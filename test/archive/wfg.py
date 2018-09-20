@@ -82,6 +82,7 @@ class WFG9(WFG):
 
 
 if __name__ == "__main__":
+    
     import matplotlib.pyplot as plt
 
     problem = WFG1(n_var=12, n_obj=3, k=4)
