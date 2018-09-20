@@ -39,9 +39,3 @@ Changelog
 ==================================
 {% include 'source/_changelog.rst' %}
 
-
-
-License
-==================================
-{% include 'source/_license.rst' %}
-

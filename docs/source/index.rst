@@ -54,8 +54,3 @@ Changelog
 
 .. include:: _changelog.rst
 
-
-License
-==================================
-
-.. include:: _license.rst
