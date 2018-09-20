@@ -1,18 +1,47 @@
 pymop - Optimization Test Problems
 ==================================
 
+
 Installation
 ==================================
-{% include 'source/_installation.rst' %}
-
-Usage
-==================================
-{% include 'source/_usage.rst' %}
+.. include:: _installation.rst
 
 Problems
 ==================================
-{% include 'source/_problems.rst' %}
+.. include:: _problems.rst
+
+Usage
+==================================
+.. include:: _usage.rst
+
+
+Implementation
+==================================
+
+All problems are implemented to efficiently evaluate multiple input
+points at a time. Therefore, the input can be a n x m dimensional
+matrix, where n is the number of points to evaluate and m the number of
+variables.
+
+
+Contributors
+==================================
+Julian Blank
+Yash Prasad
+
 
 Contact
 ==================================
-{% include 'source/_contact.rst' %}
+.. include:: _contact.rst
+
+
+Changelog
+==================================
+
+.. include:: _changelog.rst
+
+
+License
+==================================
+
+.. include:: _license.rst

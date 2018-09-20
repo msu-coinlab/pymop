@@ -26,6 +26,19 @@ matrix, where n is the number of points to evaluate and m the number of
 variables.
 
 
+
+Contributors
+==================================
+
+Julian Blank
+Yash Prasad
+
+
+Contact
+==================================
+.. include:: _contact.rst
+
+
 References
 ==================================
 
@@ -35,17 +48,14 @@ References
    :all:
 
 
-API
+
+Changelog
 ==================================
 
-Each problem is derived from the abstract Problem class:
-
-.. autoclass:: pymop.problem.Problem
-   :members:
+.. include:: _changelog.rst
 
 
-
-Contact
+License
 ==================================
-.. include:: _contact.rst
 
+.. include:: _license.rst

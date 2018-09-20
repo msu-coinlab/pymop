@@ -17,6 +17,6 @@ setup(
     license='MIT',
     keywords="optimization",
     install_requires=['numpy'],
-    packages=find_packages(exclude=['test', 'docs']),
+    packages=find_packages(exclude=['tests', 'docs']),
     include_package_data=True,
 )

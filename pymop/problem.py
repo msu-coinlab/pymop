@@ -72,7 +72,7 @@ class Problem:
             self._pareto_front = self._calc_pareto_front()
 
             if self._pareto_front is None:
-                raise Exception("Pareto front for this test problem not found.")
+                raise Exception("Pareto front for this tests problem not found.")
 
         return self._pareto_front
 
