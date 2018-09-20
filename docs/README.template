@@ -4,15 +4,15 @@ pymop - Optimization Test Problems
 
 Installation
 ==================================
-.. include:: _installation.rst
+{% include 'source/_installation.rst' %}
 
 Problems
 ==================================
-.. include:: _problems.rst
+{% include 'source/_problems.rst' %}
 
 Usage
 ==================================
-.. include:: _usage.rst
+{% include 'source/_usage.rst' %}
 
 
 Implementation
@@ -32,16 +32,16 @@ Yash Prasad
 
 Contact
 ==================================
-.. include:: _contact.rst
+{% include 'source/_contact.rst' %}
 
 
 Changelog
 ==================================
+{% include 'source/_changelog.rst' %}
 
-.. include:: _changelog.rst
 
 
 License
 ==================================
+{% include 'source/_license.rst' %}
 
-.. include:: _license.rst
