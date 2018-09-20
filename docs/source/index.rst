@@ -29,10 +29,7 @@ variables.
 
 Contributors
 ==================================
-
-Julian Blank
-Yash Prasad
-
+.. include:: _contributors.rst
 
 Contact
 ==================================

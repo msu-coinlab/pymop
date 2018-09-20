@@ -91,8 +91,8 @@ variables.
 
 Contributors
 ==================================
-Julian Blank
-Yash Prasad
+| Julian Blank
+| Yash Prasad
 
 
 Contact
@@ -108,8 +108,8 @@ Feel free to contact me if you have any question:
 
 Changelog
 ==================================
-`0.2.1` - September 20th, 2018
--------------------------
+`0.2.1`
+---------------------------------------
 
 * First official release providing a bunch of test problems
 * Some redesign of classes compared to early versions

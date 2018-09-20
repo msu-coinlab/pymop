@@ -1,5 +1,5 @@
-`0.2.1` - September 20th, 2018
--------------------------
+`0.2.1`
+---------------------------------------
 
 * First official release providing a bunch of test problems
 * Some redesign of classes compared to early versions
