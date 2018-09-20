@@ -1,0 +1,9 @@
+image: blankjul/pymoo-test
+
+dev:
+
+  before_script:
+    - python setup.py install
+
+  script:
+    - python tests/test_suite.py
