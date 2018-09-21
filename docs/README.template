@@ -4,15 +4,19 @@ pymop - Optimization Test Problems
 
 Installation
 ==================================
-{% include 'source/_installation.rst' %}
+{% include 'docs/source/_installation.rst' %}
 
 Problems
 ==================================
-{% include 'source/_problems.rst' %}
+{% include 'docs/source/_problems.rst' %}
 
 Usage
 ==================================
-{% include 'source/_usage.rst' %}
+
+.. code:: python
+
+    {% macro someop() %}{% include "pymop/usage/evaluate.py" %}{% endmacro %}
+    {{ someop()|indent }}
 
 
 Implementation
@@ -26,15 +30,15 @@ variables.
 
 Contributors
 ==================================
-{% include 'source/_contributors.rst' %}
+{% include 'docs/source/_contributors.rst' %}
 
 
 Contact
 ==================================
-{% include 'source/_contact.rst' %}
+{% include 'docs/source/_contact.rst' %}
 
 
 Changelog
 ==================================
-{% include 'source/_changelog.rst' %}
+{% include 'docs/source/_changelog.rst' %}
 
