@@ -7,7 +7,7 @@ pymop - Optimization Test Problems
 
 
 You can find the detailed documentation `here
-<http://www.research-blank.de/pymop/>`_.
+<https://www.egr.msu.edu/coinlab/blankjul/pymop>`_.
 
 
 Installation
