@@ -8,43 +8,7 @@ pymop - Optimization Test Problems
 
 | You can find the detailed documentation `here <http://www.research-blank.de/pymop/>`_.
 
-Installation
-==================================
-{% include 'docs/source/_installation.rst' %}
-
 Problems
 ==================================
 {% include 'docs/source/_problems.rst' %}
-
-Usage
-==================================
-
-.. code:: python
-
-    {% macro someop() %}{% include "pymop/usage/evaluate.py" %}{% endmacro %}
-    {{ someop()|indent }}
-
-
-Implementation
-==================================
-
-All problems are implemented to efficiently evaluate multiple input
-points at a time. Therefore, the input can be a n x m dimensional
-matrix, where n is the number of points to evaluate and m the number of
-variables.
-
-
-Contributors
-==================================
-{% include 'docs/source/_contributors.rst' %}
-
-
-Contact
-==================================
-{% include 'docs/source/_contact.rst' %}
-
-
-Changelog
-==================================
-{% include 'docs/source/_changelog.rst' %}
 
