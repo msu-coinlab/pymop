@@ -12,5 +12,8 @@ class Sphere(Problem):
         self.xl = 0 * np.ones(self.n_var)
         self.xu = 1 * np.ones(self.n_var)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         f[:, 0] = np.sum(np.square(x - 0.5), axis=1)
+
+    def _calc_pareto_front(self):
+        return np.zeros(1)

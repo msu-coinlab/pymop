@@ -1,4 +1,13 @@
+import os
+
 import numpy as np
+
+
+def load_pareto_front_from_file(fname):
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    fname = os.path.join(current_dir, "pf", "%s" % fname)
+    if os.path.isfile(fname):
+        return np.loadtxt(fname)
 
 
 def get_uniform_weights(n_points, n_dim):

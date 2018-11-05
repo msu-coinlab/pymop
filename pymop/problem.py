@@ -1,6 +1,6 @@
-import os
+from abc import abstractmethod
+
 import numpy as np
-import inspect
 
 
 class Problem:
@@ -22,9 +22,9 @@ class Problem:
             number of objectives
         n_constr : int
             number of constraints
-        xl : np.ndarray
+        xl : np.array
             lower bounds for the variables
-        xu : np.ndarray
+        xu : np.array
             upper bounds for the variable
         func : func
             function that evaluates the problem. Useful if a problem is defined inplace.
@@ -42,7 +42,7 @@ class Problem:
         """
         Returns
         -------
-        nadir_point : np.ndarray
+        nadir_point : np.array
             The nadir point for a multi-objective problem.
             If single-objective, it returns the best possible solution which is equal to the ideal point.
 
@@ -54,29 +54,26 @@ class Problem:
         """
         Returns
         -------
-        ideal_point : np.ndarray
+        ideal_point : np.array
             The ideal point for a multi-objective problem. If single-objective
             it returns the best possible solution.
         """
         return np.min(self.pareto_front(), axis=0)
 
-    def pareto_front(self):
+    def pareto_front(self, *args, **kwargs):
         """
         Returns
         -------
-        P : np.ndarray
+        P : np.array
             The Pareto front of a given problem. It is only loaded or calculate the first time and then cached.
             For a single-objective problem only one point is returned but still in a two dimensional array.
         """
         if self._pareto_front is None:
-            self._pareto_front = self._calc_pareto_front()
-
-            if self._pareto_front is None:
-                raise Exception("Pareto front for this tests problem not found.")
+            self._pareto_front = self._calc_pareto_front(*args, **kwargs)
 
         return self._pareto_front
 
-    def evaluate(self, X, return_constraint_violation=True, return_constraints=False, **kwargs):
+    def evaluate(self, X, *args, return_constraint_violation=True, return_constraints=False, **kwargs):
 
         """
         Evaluate the given problem.
@@ -87,7 +84,7 @@ class Problem:
 
         Parameters
         ----------
-        X : np.ndarray
+        X : np.array
             A two dimensional matrix where each row is a point to evaluate and each column a variable.
 
         return_constraint_violation : bool
@@ -99,11 +96,11 @@ class Problem:
 
         Returns
         -------
-        F : np.ndarray
+        F : np.array
             Objective Values
-        CV : np.ndarray
-            Constraint Violations as a one dimensional array.
-        G : np.ndarray
+        CV : np.array
+            Constraint Violations as a two dimensional array.
+        G : np.array
             Constraints as a two dimensional array.
 
         """
@@ -116,42 +113,24 @@ class Problem:
         if X.shape[1] != self.n_var:
             raise Exception('Input dimension %s are not equal to n_var %s!' % (X.shape[1], self.n_var))
 
-        # create the resulting arrays
-        f = np.zeros((X.shape[0], self.n_obj))
-        g = np.zeros((X.shape[0], self.n_constr))
+        # create the objective value array
+        F = np.zeros((X.shape[0], self.n_obj))
 
-        # if constraints exists func(x, f, g) is used otherwise just func(x, f)
-        params = inspect.signature(self.func).parameters
-
-        # optionally allow to have individuals also as a parameter and call the subfunction not in kwargs
-        if 'individuals' in kwargs:
-            individuals = kwargs.pop('individuals')
-        else:
-            individuals = None
-
-        _kwargs = {}
-        for key, value in kwargs.items():
-            if key in params:
-                _kwargs[key] = value
-
-        args = [X, f]
+        # create the constraint array and add to params
+        G = np.zeros((X.shape[0], self.n_constr))
 
         if self.n_constr > 0:
-            args.append(g)
-            if len(params) == 4:
-                args.append(individuals)
-        else:
-            if len(params) == 3:
-                args.append(individuals)
+            args = [G] + list(args)
 
-        self.func(*args, **_kwargs)
+        # call the function to evaluate
+        self._evaluate(X, F, *args, **kwargs)
 
         # create the returned values in a list
-        vals = [f]
+        vals = [F]
         if return_constraint_violation:
-            vals.append(Problem.calc_constraint_violation(g))
+            vals.append(Problem.calc_constraint_violation(G))
         if return_constraints:
-            vals.append(g)
+            vals.append(G)
 
         # convert back if just one vector is evaluated
         if only_single_value:
@@ -162,6 +141,10 @@ class Problem:
         else:
             return vals[0]
 
+    @abstractmethod
+    def _evaluate(self, x, f, *args, **kwargs):
+        pass
+
     def name(self):
         """
         Returns
@@ -171,22 +154,18 @@ class Problem:
         """
         return self.__class__.__name__
 
-    def _calc_pareto_front(self):
+    def _calc_pareto_front(self, *args, **kwargs):
         """
-        Default behaviour is look to look for the pareto front file.
-        If this does not exist return None.
+        Method that either loads or calculates the pareto front. This is only done
+        ones and the pareto front is stored.
 
         Returns
         -------
-        pf : numpy.array
-            Pareto optimal front for the problem. In case of single-objective just one value
+        pf : np.array
+            Pareto front as array.
 
         """
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        fname = os.path.join(current_dir, "pf", "%s.pf" % self.name())
-        if os.path.isfile(fname):
-            return np.loadtxt(fname)
-        return None
+        pass
 
     # some problem information
     def __str__(self):
@@ -208,44 +187,3 @@ class Problem:
         else:
             return np.sum(G * (G > 0).astype(np.float), axis=1)[:, None]
 
-
-class ScaledProblem(Problem):
-
-    def __init__(self, problem, scale_factor):
-        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
-        self.problem = problem
-        self.scale_factor = scale_factor
-
-    @staticmethod
-    def get_scale(n, scale_factor):
-        return np.power(np.full(n, scale_factor), np.arange(n))
-
-    def evaluate(self, X, **kwargs):
-        t = self.problem.evaluate(X, **kwargs)
-        F = t[0] * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
-        return tuple([F] + list(t)[1:])
-
-    def _calc_pareto_front(self):
-        return self.problem.pareto_front() * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
-
-
-class ConvexProblem(Problem):
-
-    def __init__(self, problem):
-        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
-        self.problem = problem
-
-    @staticmethod
-    def get_power(n):
-        p = np.full(n, 4.0)
-        p[-1] = 2.0
-        return p
-
-    def evaluate(self, X, **kwargs):
-        t = self.problem.evaluate(X, **kwargs)
-        F = np.power(t[0], ConvexProblem.get_power(self.n_obj))
-        return tuple([F] + list(t)[1:])
-
-    def _calc_pareto_front(self):
-        F = self.problem.pareto_front()
-        return np.power(F, ConvexProblem.get_power(self.n_obj))

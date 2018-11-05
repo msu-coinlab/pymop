@@ -20,7 +20,7 @@ class Knapsack(Problem):
         self.P = P
         self.C = C
 
-    def _evaluate(self, x, f, g):
+    def _evaluate(self, x, f, g, *args, **kwargs):
         g[:, 0] = np.sum(self.W * x, axis=1) - self.C
         f[:, 0] = -np.sum(self.P * x, axis=1)
 

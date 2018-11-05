@@ -6,8 +6,9 @@ class UsageTest(unittest.TestCase):
 
     def test(self):
 
-        USAGE_DIR = "../pymop/usage"
+        USAGE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "pymop", "usage")
 
+        print(USAGE_DIR)
         for fname in os.listdir(USAGE_DIR):
 
             with open(os.path.join(USAGE_DIR, fname)) as f:
@@ -15,9 +16,9 @@ class UsageTest(unittest.TestCase):
 
                 try:
                     exec(s)
-                except:
+                except Exception as e:
+                    print(e)
                     raise Exception("Usage %s failed." % fname)
-
 
 
 if __name__ == '__main__':

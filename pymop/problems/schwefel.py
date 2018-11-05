@@ -13,5 +13,5 @@ class Schwefel(Problem):
         self.xl = -500 * np.ones(self.n_var)
         self.xu = 500 * np.ones(self.n_var)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         f[:, 0] = 418.9829 * self.n_var - np.sum(x * np.sin(np.sqrt(np.abs(x))), axis=1)

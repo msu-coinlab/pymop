@@ -6,9 +6,7 @@ pymop - Optimization Test Problems
    :target: https://gitlab.msu.edu/blankjul/pymop/commits/master
 
 
-You can find the detailed documentation `here
-<http://www.research-blank.de/pymop/>`_.
-
+| You can find the detailed documentation `here <http://www.research-blank.de/pymop/>`_.
 
 Installation
 ==================================

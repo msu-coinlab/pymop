@@ -1,0 +1,2 @@
+recursive-include pymop *.py
+recursive-include external *

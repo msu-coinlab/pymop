@@ -11,7 +11,7 @@ from pymop.problems.rosenbrock import *
 from pymop.problems.schwefel import *
 from pymop.problems.sphere import *
 from pymop.problems.tnk import *
-from pymop.problems.trust_2d import *
+from pymop.problems.truss2d import *
 from pymop.problems.welded_beam import *
 from pymop.problems.zakharov import *
 from pymop.problems.zdt import *

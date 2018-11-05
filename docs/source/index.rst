@@ -4,6 +4,21 @@
    :caption: Contents:
 
 
+Introduction
+==================================
+
+This framework provides a collection of test problems in Python.
+
+The main features are:
+
+- Most important multi-objective test function is one place
+- Vectorized evaluation by using numpy matrices
+- Easily new problems can be created using custom classes or functions
+
+This framework is used by `pymoo <https://github.com/msu-coinlab/pymoo>`_ and can be solved directly.
+Please contact us if you implement test function to be added to this collection.
+
+
 Installation
 ==================================
 .. include:: _installation.rst
@@ -15,16 +30,6 @@ Problems
 Usage
 ==================================
 .. include:: _usage.rst
-
-
-Implementation
-==================================
-
-All problems are implemented to efficiently evaluate multiple input
-points at a time. Therefore, the input can be a n x m dimensional
-matrix, where n is the number of points to evaluate and m the number of
-variables.
-
 
 
 Contributors

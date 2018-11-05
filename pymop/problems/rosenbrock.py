@@ -13,6 +13,6 @@ class Rosenbrock(Problem):
         self.xl = -2.048 * np.ones(self.n_var)
         self.xu = 2.048 * np.ones(self.n_var)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         for i in range(x.shape[1] - 1):
             f[:, 0] += 100 * np.square((x[:, i + 1] - np.square(x[:, i]))) + np.square((1 - x[:, i]))

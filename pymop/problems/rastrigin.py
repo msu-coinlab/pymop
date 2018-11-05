@@ -14,6 +14,6 @@ class Rastrigin(Problem):
         self.xl = -5 * np.ones(self.n_var)
         self.xu = 5 * np.ones(self.n_var)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         z = np.power(x, 2) - self.A * np.cos(2 * np.pi * x)
         f[:, 0] = self.A * self.n_var + np.sum(z, axis=1)

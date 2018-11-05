@@ -31,7 +31,7 @@ class CorrectnessTest(unittest.TestCase):
     def test_problems(self):
         for entry in problems:
             name, params = entry
-            #print("Testing: " + name)
+            print("Testing: " + name)
 
             X, F, CV = load(name)
             problem = globals()[name](*params)

@@ -5,7 +5,7 @@ from pymop.util import get_uniform_weights
 
 
 class DTLZ(Problem):
-    def __init__(self, n_var, n_obj, n_pareto_points=None):
+    def __init__(self, n_var, n_obj):
         Problem.__init__(self)
         self.n_obj = n_obj
         self.n_var = n_var
@@ -15,7 +15,6 @@ class DTLZ(Problem):
         self.xu = np.ones(self.n_var)
 
         self.k = self.n_var - self.n_obj + 1
-        self.n_pareto_points = n_pareto_points
 
     def g1(self, X_M):
         return 100 * (self.k + np.sum(np.square(X_M - 0.5) - np.cos(20 * np.pi * (X_M - 0.5)), axis=1))
@@ -30,27 +29,19 @@ class DTLZ(Problem):
             if i > 0:
                 f[:, i] *= np.sin(np.power(X_[:, X_.shape[1] - i], alpha) * np.pi / 2.0)
 
-    def pareto_front(self):
-        if self.n_pareto_points is None:
-            raise Exception("Please specify how many pareto-optimal points are desired by setting n_pareto_points!")
 
-        return super().pareto_front()
-
-
-def generic_sphere(n_points, n_dim):
-    w = get_uniform_weights(n_points, n_dim)
-    F = w / np.tile(np.linalg.norm(w, axis=1)[:, None], (1, w.shape[1]))
-    return F
+def generic_sphere(ref_dirs):
+    return ref_dirs / np.tile(np.linalg.norm(ref_dirs, axis=1)[:, None], (1, ref_dirs.shape[1]))
 
 
 class DTLZ1(DTLZ):
-    def __init__(self, n_var=10, n_obj=3, **kwargs):
+    def __init__(self, n_var=7, n_obj=3, **kwargs):
         super().__init__(n_var, n_obj, **kwargs)
 
-    def _calc_pareto_front(self):
-        return 0.5 * get_uniform_weights(self.n_pareto_points, self.n_obj)
+    def _calc_pareto_front(self, ref_dirs=None):
+        return 0.5 * ref_dirs
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g1(X_M)
         for i in range(0, self.n_obj):
@@ -64,10 +55,10 @@ class DTLZ2(DTLZ):
     def __init__(self, n_var=10, n_obj=3, **kwargs):
         super().__init__(n_var, n_obj, **kwargs)
 
-    def _calc_pareto_front(self):
-        return generic_sphere(self.n_pareto_points, self.n_obj)
+    def _calc_pareto_front(self, ref_dirs):
+        return generic_sphere(ref_dirs)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
         self.obj_func(X_, g, f, alpha=1)
@@ -77,10 +68,10 @@ class DTLZ3(DTLZ):
     def __init__(self, n_var=10, n_obj=3, **kwargs):
         super().__init__(n_var, n_obj, **kwargs)
 
-    def _calc_pareto_front(self):
-        return generic_sphere(self.n_pareto_points, self.n_obj)
+    def _calc_pareto_front(self, ref_dirs):
+        return generic_sphere(ref_dirs)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g1(X_M)
         self.obj_func(X_, g, f, alpha=1)
@@ -92,10 +83,10 @@ class DTLZ4(DTLZ):
         self.alpha = alpha
         self.d = d
 
-    def _calc_pareto_front(self):
-        return generic_sphere(self.n_pareto_points, self.n_obj)
+    def _calc_pareto_front(self, ref_dirs):
+        return generic_sphere(ref_dirs)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
         self.obj_func(X_, g, f, alpha=self.alpha)
@@ -106,9 +97,9 @@ class DTLZ5(DTLZ):
         super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
-        pass
+        raise Exception("Not implemented yet.")
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
 
@@ -122,9 +113,9 @@ class DTLZ6(DTLZ):
         super().__init__(n_var, n_obj, **kwargs)
 
     def _calc_pareto_front(self):
-        pass
+        raise Exception("Not implemented yet.")
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = np.sum(np.power(X_M, 0.1), axis=1)
 
@@ -137,7 +128,7 @@ class DTLZ7(DTLZ):
     def __init__(self, n_var=10, n_obj=3, **kwargs):
         super().__init__(n_var, n_obj, **kwargs)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         for i in range(0, self.n_obj - 1):
             f[:, i] = x[:, i]
 
@@ -146,4 +137,43 @@ class DTLZ7(DTLZ):
         f[:, self.n_obj - 1] = (1 + g) * h
 
 
+class ScaledProblem(Problem):
 
+    def __init__(self, problem, scale_factor):
+        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
+        self.problem = problem
+        self.scale_factor = scale_factor
+
+    @staticmethod
+    def get_scale(n, scale_factor):
+        return np.power(np.full(n, scale_factor), np.arange(n))
+
+    def evaluate(self, X, *args, **kwargs):
+        t = self.problem.evaluate(X, **kwargs)
+        F = t[0] * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
+        return tuple([F] + list(t)[1:])
+
+    def _calc_pareto_front(self):
+        return self.problem.pareto_front() * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
+
+
+class ConvexProblem(Problem):
+
+    def __init__(self, problem):
+        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
+        self.problem = problem
+
+    @staticmethod
+    def get_power(n):
+        p = np.full(n, 4.0)
+        p[-1] = 2.0
+        return p
+
+    def evaluate(self, X, *args, **kwargs):
+        t = self.problem.evaluate(X, **kwargs)
+        F = np.power(t[0], ConvexProblem.get_power(self.n_obj))
+        return tuple([F] + list(t)[1:])
+
+    def _calc_pareto_front(self):
+        F = self.problem.pareto_front()
+        return np.power(F, ConvexProblem.get_power(self.n_obj))

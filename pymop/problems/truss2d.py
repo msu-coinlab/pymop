@@ -18,7 +18,7 @@ class Truss2D(Problem):
         self.xl = np.array([0.0, 0.0, 1.0])
         self.xu = np.array([self.Amax, self.Amax, 3.0])
 
-    def _evaluate(self, x, f, g):
+    def _evaluate(self, x, f, g, *args, **kwargs):
 
         # variable names for convenient access
         x1 = x[:, 0]

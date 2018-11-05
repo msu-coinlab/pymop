@@ -13,7 +13,7 @@ class Zakharov(Problem):
         self.xl = -10 * np.ones(self.n_var)
         self.xu = 10 * np.ones(self.n_var)
 
-    def _evaluate(self, x, f):
+    def _evaluate(self, x, f, *args, **kwargs):
         a = np.sum(0.5 * np.arange(1, self.n_var + 1) * x, axis=1)
         f[:, 0] = np.sum(np.square(x), axis=1) + np.square(a) + np.power(a, 4)
 
