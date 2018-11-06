@@ -11,7 +11,7 @@ class Problem:
     and ideal point are stored.
     """
 
-    def __init__(self, n_var=0, n_obj=0, n_constr=0, xl=None, xu=None, func=None):
+    def __init__(self, n_var=-1, n_obj=-1, n_constr=0, xl=None, xu=None, type_var=np.double):
         """
 
         Parameters
@@ -22,19 +22,32 @@ class Problem:
             number of objectives
         n_constr : int
             number of constraints
-        xl : np.array
-            lower bounds for the variables
-        xu : np.array
-            upper bounds for the variable
-        func : func
-            function that evaluates the problem. Useful if a problem is defined inplace.
+        xl : np.array or int
+            lower bounds for the variables. if integer all lower bounds are equal.
+        xu : np.array or int
+            upper bounds for the variable. if integer all upper bounds are equal.
+        type_var : numpy type
+            type of the variable to be evaluated. Can also be np.object if it is a complex data type
         """
+
+        # number of variable for this problem
         self.n_var = n_var
+
+        # type of the variable to be evaluated
+        self.type_var = type_var
+
+        # number of objectives
         self.n_obj = n_obj
+
+        # number of constraints
         self.n_constr = n_constr
-        self.xl = xl if type(xl) is np.ndarray else np.ones(n_var) * xl
-        self.xu = xu if type(xu) is np.ndarray else np.ones(n_var) * xu
-        self.func = func
+
+        # allow just an integer for xl and xu if all bounds are equal
+        if n_var > 0 and isinstance(xl, int) and isinstance(xu, int):
+            self.xl = xl if type(xl) is np.ndarray else np.ones(n_var) * xl
+            self.xu = xu if type(xu) is np.ndarray else np.ones(n_var) * xu
+
+        # the pareto front will be calculated only once and is stored here
         self._pareto_front = None
 
     # return the maximum objective values of the pareto front
@@ -108,6 +121,15 @@ class Problem:
         only_single_value = len(np.shape(X)) == 1
         if only_single_value:
             X = np.array([X])
+
+        if isinstance(X, np.ndarray):
+            type_of_var = X.dtype
+        else:
+            type_of_var = type(X)
+
+        if type_of_var != self.type_var:
+            raise Exception('As variable type for this problem %s was defined. However, it is evaluated with %s!'
+                            % (self.type_var, type_of_var))
 
         # check the dimensionality of the problem and the given input
         if X.shape[1] != self.n_var:
@@ -186,4 +208,3 @@ class Problem:
             return np.zeros(G.shape[0])[:, None]
         else:
             return np.sum(G * (G > 0).astype(np.float), axis=1)[:, None]
-

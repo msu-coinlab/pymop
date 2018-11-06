@@ -6,11 +6,7 @@ from pymop.problem import Problem
 
 class TNK(Problem):
     def __init__(self):
-        Problem.__init__(self)
-        self.n_var = 2
-        self.n_constr = 2
-        self.n_obj = 2
-        self.func = self._evaluate
+        super().__init__(n_var=2, n_obj=2, n_constr=2, type_var=np.double)
         self.xl = np.array([0, 1e-30])
         self.xu = np.array([np.pi, np.pi])
 

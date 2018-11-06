@@ -1,3 +1,10 @@
+`0.2.3`
+---------------------------------------
+
+* Introduced a variable type to define a problem more precisely
+* Simplified the problem definition by using super() in constructor
+
+
 `0.2.2`
 ---------------------------------------
 

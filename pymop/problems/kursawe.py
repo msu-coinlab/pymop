@@ -6,13 +6,7 @@ from pymop.problem import Problem
 
 class Kursawe(Problem):
     def __init__(self):
-        Problem.__init__(self)
-        self.n_var = 3
-        self.n_constr = 0
-        self.n_obj = 2
-        self.func = self._evaluate
-        self.xl = -5 * np.ones(self.n_var)
-        self.xu = 5 * np.ones(self.n_var)
+        super().__init__(n_var=3, n_obj=2, n_constr=0, xl=-5, xu=5, type_var=np.double)
 
     def _evaluate(self, x, f, *args, **kwargs):
         for i in range(2):

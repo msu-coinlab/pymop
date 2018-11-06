@@ -5,11 +5,7 @@ from pymop.problem import Problem
 
 class Carside(Problem):
     def __init__(self):
-        Problem.__init__(self)
-        self.n_var = 7
-        self.n_constr = 10
-        self.n_obj = 3
-        self.func = self._evaluate
+        super().__init__(n_var=7, n_obj=3, n_constr=10, type_var=np.double)
         self.xl = np.array([0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4])
         self.xu = np.array([1.5, 1.35, 1.5, 1.5, 2.625, 1.2, 1.2])
 

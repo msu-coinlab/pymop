@@ -5,12 +5,7 @@ from pymop.problem import Problem
 
 class Sphere(Problem):
     def __init__(self, n_var=10):
-        self.n_var = n_var
-        self.n_constr = 0
-        self.n_obj = 1
-        self.func = self._evaluate
-        self.xl = 0 * np.ones(self.n_var)
-        self.xu = 1 * np.ones(self.n_var)
+        super().__init__(n_var=n_var, n_obj=1, n_constr=0, xl=-0, xu=1, type_var=np.double)
 
     def _evaluate(self, x, f, *args, **kwargs):
         f[:, 0] = np.sum(np.square(x - 0.5), axis=1)

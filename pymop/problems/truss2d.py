@@ -6,11 +6,7 @@ from pymop.problem import Problem
 class Truss2D(Problem):
 
     def __init__(self):
-        Problem.__init__(self)
-        self.n_var = 3
-        self.n_constr = 1
-        self.n_obj = 2
-        self.func = self._evaluate
+        super().__init__(n_var=3, n_obj=2, n_constr=1, type_var=np.double)
 
         self.Amax = 0.01
         self.Smax = 1e5

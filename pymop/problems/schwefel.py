@@ -5,13 +5,7 @@ from pymop.problem import Problem
 
 class Schwefel(Problem):
     def __init__(self, n_var=2):
-        Problem.__init__(self)
-        self.n_var = n_var
-        self.n_constr = 0
-        self.n_obj = 1
-        self.func = self._evaluate
-        self.xl = -500 * np.ones(self.n_var)
-        self.xu = 500 * np.ones(self.n_var)
+        super().__init__(n_var=n_var, n_obj=1, n_constr=0, xl=-500, xu=500, type_var=np.double)
 
     def _evaluate(self, x, f, *args, **kwargs):
         f[:, 0] = 418.9829 * self.n_var - np.sum(x * np.sin(np.sqrt(np.abs(x))), axis=1)

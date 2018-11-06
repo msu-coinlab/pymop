@@ -9,6 +9,9 @@ class MyProblem(Problem):
     def __init__(self, var1=5, var2=0.1):
         super().__init__.__init__(self)
 
+        # define the variable type which will be checked before the evaluation
+        self.type_var = np.double
+
         # define the number of variables the problem has
         self.n_var = 10
 

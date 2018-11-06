@@ -5,14 +5,7 @@ from pymop.problem import Problem
 
 class DTLZ(Problem):
     def __init__(self, n_var, n_obj):
-        Problem.__init__(self)
-        self.n_obj = n_obj
-        self.n_var = n_var
-        self.n_constr = 0
-        self.func = self._evaluate
-        self.xl = np.zeros(self.n_var)
-        self.xu = np.ones(self.n_var)
-
+        super().__init__(n_var=n_var, n_obj=n_obj, n_constr=0, xl=0, xu=1, type_var=np.double)
         self.k = self.n_var - self.n_obj + 1
 
     def g1(self, X_M):

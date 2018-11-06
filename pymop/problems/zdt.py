@@ -4,22 +4,15 @@ from pymop.problem import Problem
 
 
 class ZDT(Problem):
-    def __init__(self, n_var=30):
-        Problem.__init__(self, func=self._evaluate)
-        self.n_var = n_var
-        self.n_constr = 0
-        self.n_obj = 2
 
-        self.xl = np.zeros(self.n_var)
-        self.xu = np.ones(self.n_var)
+    def __init__(self, n_var=30):
+        super().__init__(n_var=n_var, n_obj=2, n_constr=0, xl=0, xu=1, type_var=np.double)
 
 
 class ZDT1(ZDT):
-    def __init__(self, n_var=30):
-        ZDT.__init__(self, n_var)
 
     def _calc_pareto_front(self, n_pareto_points=100):
-        x = np.linspace(0,1, n_pareto_points)
+        x = np.linspace(0, 1, n_pareto_points)
         return np.array([x, 1 - np.sqrt(x)]).T
 
     def _evaluate(self, x, f, *args, **kwargs):
@@ -29,8 +22,6 @@ class ZDT1(ZDT):
 
 
 class ZDT2(ZDT):
-    def __init__(self, n_var=30):
-        ZDT.__init__(self, n_var)
 
     def _calc_pareto_front(self, n_pareto_points=100):
         x = np.linspace(0, 1, n_pareto_points)
@@ -44,8 +35,6 @@ class ZDT2(ZDT):
 
 
 class ZDT3(ZDT):
-    def __init__(self, n_var=30):
-        ZDT.__init__(self, n_var)
 
     def _calc_pareto_front(self, n_pareto_points=100):
         regions = [[0, 0.0830015349],
@@ -56,7 +45,7 @@ class ZDT3(ZDT):
 
         pareto_front = np.array([]).reshape((-1, 2))
         for r in regions:
-            x1 = np.linspace(r[0], r[1], int(n_pareto_points/len(regions)))
+            x1 = np.linspace(r[0], r[1], int(n_pareto_points / len(regions)))
             x2 = 1 - np.sqrt(x1) - x1 * np.sin(10 * np.pi * x1)
             pareto_front = np.concatenate((pareto_front, np.array([x1, x2]).T), axis=0)
         return pareto_front
@@ -70,7 +59,7 @@ class ZDT3(ZDT):
 
 class ZDT4(ZDT):
     def __init__(self, n_var=10):
-        ZDT.__init__(self, n_var)
+        super().__init__(n_var)
         self.xl = -5 * np.ones(self.n_var)
         self.xl[0] = 0.0
         self.xu = 5 * np.ones(self.n_var)
@@ -92,9 +81,6 @@ class ZDT4(ZDT):
 
 
 class ZDT6(ZDT):
-    def __init__(self, n_var=10):
-        ZDT.__init__(self, n_var)
-        self.func = self._evaluate
 
     def _calc_pareto_front(self, n_pareto_points=100):
         x = np.linspace(0.2807753191, 1, n_pareto_points)

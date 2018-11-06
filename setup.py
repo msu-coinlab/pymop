@@ -8,7 +8,7 @@ def readme():
 
 __name__ = "pymop"
 __author__ = "Julian Blank"
-__version__ = '0.2.3-dev'
+__version__ = '0.2.3'
 __url__ = "https://github.com/msu-coinlab/pymop"
 
 setup(
@@ -16,7 +16,7 @@ setup(
     version=__version__,
     author=__author__,
     author_email="blankjul@egr.msu.edu",
-    description="Optimization Test Problems",
+    description="Multi-Objective Optimization Problems",
     long_description=readme(),
     url=__url__,
     license='Apache License 2.0',
