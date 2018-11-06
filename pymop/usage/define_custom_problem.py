@@ -1,13 +1,13 @@
 import numpy as np
 
-from pymop import Problem
+from pymop.problem import Problem
 
 
 # always derive from the main problem for the evaluation
 class MyProblem(Problem):
 
     def __init__(self, var1=5, var2=0.1):
-        Problem.__init__(self)
+        super().__init__.__init__(self)
 
         # define the number of variables the problem has
         self.n_var = 10
@@ -28,7 +28,6 @@ class MyProblem(Problem):
 
     # implemented the function evaluation function - the arrays to fill are provided directly
     def _evaluate(self, x, f, g, *args, **kwargs):
-
         # define an objective function to be evaluated using var1
         f[:, 0] = np.sum(np.power(x, 2) - self.var1 * np.cos(2 * np.pi * x), axis=1)
 
@@ -41,6 +40,4 @@ class MyProblem(Problem):
 
 
 problem = MyProblem()
-F, G = problem.evaluate(np.random.rand(100,10))
-
-
+F, G = problem.evaluate(np.random.rand(100, 10))

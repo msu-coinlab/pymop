@@ -16,4 +16,4 @@ class Sphere(Problem):
         f[:, 0] = np.sum(np.square(x - 0.5), axis=1)
 
     def _calc_pareto_front(self):
-        return np.zeros(1)
+        return np.zeros((1, 1))

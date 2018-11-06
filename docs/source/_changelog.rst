@@ -1,7 +1,15 @@
+`0.2.2`
+---------------------------------------
+
+* Improved the documentation and usages
+* We modified the global interface for the evaluation function using *args and **kwargs
+* The Pareto-fronts are now dependend on parameters and not attributes in the class
+
+
 `0.2.1`
 ---------------------------------------
 
 * First official release providing a bunch of test problems
 * Some redesign of classes compared to early versions
-* Added trust_2d problems
+* Added truss_2d problem
 

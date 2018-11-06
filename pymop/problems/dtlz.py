@@ -1,7 +1,6 @@
 import numpy as np
 
 from pymop.problem import Problem
-from pymop.util import get_uniform_weights
 
 
 class DTLZ(Problem):

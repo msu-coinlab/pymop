@@ -22,6 +22,6 @@ class Ackley(Problem):
         f[:, 0] = part1 + part2 + self.c1 + np.exp(1)
 
     def _calc_pareto_front(self):
-        return np.zeros(1)
+        return np.zeros((1, 1))
 
 

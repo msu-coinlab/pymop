@@ -15,7 +15,7 @@ class UsageTest(unittest.TestCase):
                 s = f.read()
 
                 try:
-                    exec(s)
+                    exec(s, globals())
                 except Exception as e:
                     print(e)
                     raise Exception("Usage %s failed." % fname)

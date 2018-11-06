@@ -8,7 +8,7 @@ def readme():
 
 __name__ = "pymop"
 __author__ = "Julian Blank"
-__version__ = '0.2.1-dev9'
+__version__ = '0.2.2'
 __url__ = "https://github.com/msu-coinlab/pymop"
 
 setup(

@@ -1,4 +1,4 @@
-pymop - Optimization Test Problems
+pymop - Multi-Objective Optimization Problems
 ==================================
 
 .. image:: https://gitlab.msu.edu/blankjul/pymop/badges/master/pipeline.svg
