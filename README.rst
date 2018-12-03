@@ -11,6 +11,12 @@ Here, you can find a detailed documentation and information about the framework:
 https://www.egr.msu.edu/coinlab/blankjul/pymop/
 
 
+.. image:: https://gitlab.msu.edu/blankjul/pymop/badges/master/pipeline.svg
+   :alt: pipeline status
+   :target: https://gitlab.msu.edu/blankjul/pymop/commits/master
+
+
+
 Problems
 ==================================
 
@@ -21,7 +27,6 @@ included:
 -  Single-Objective:
 
    -  Ackley
-   -  BNH
    -  Griewank
    -  Knapsack
    -  Schwefel
