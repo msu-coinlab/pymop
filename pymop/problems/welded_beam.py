@@ -1,6 +1,7 @@
 import numpy as np
 
 from pymop.problem import Problem
+from pymop.util import load_pareto_front_from_file
 
 
 class WeldedBeam(Problem):
@@ -31,3 +32,6 @@ class WeldedBeam(Problem):
         g[:, 1] = (1 / s_max) * (s - s_max)
         g[:, 2] = (1 / (5 - 0.125)) * (x[:, 0] - x[:, 3])
         g[:, 3] = (1 / P) * (P - P_c)
+
+    def _calc_pareto_front(self):
+        return load_pareto_front_from_file("welded_beam.pf")

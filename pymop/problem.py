@@ -46,6 +46,9 @@ class Problem:
         if n_var > 0 and isinstance(xl, int) and isinstance(xu, int):
             self.xl = xl if type(xl) is np.ndarray else np.ones(n_var) * xl
             self.xu = xu if type(xu) is np.ndarray else np.ones(n_var) * xu
+        else:
+            self.xl = xl
+            self.xu = xu
 
         # the pareto front will be calculated only once and is stored here
         self._pareto_front = None
@@ -86,7 +89,11 @@ class Problem:
 
         return self._pareto_front
 
-    def evaluate(self, X, *args, return_constraint_violation=True, return_constraints=False, **kwargs):
+    def evaluate(self, X, *args,
+                 return_constraint_violation=True,
+                 return_constraints=False,
+                 check_var_type=False,
+                 **kwargs):
 
         """
         Evaluate the given problem.
@@ -106,6 +113,10 @@ class Problem:
             
         return_constraints : bool
             Whether all constraint values are returned or not. Default: False.
+
+        check_var_type : bool
+            Whether data types are checked to match or not. Might be desired if input is boolean and
+            vector is real. However, lazy behaviour to just treat the input as it is, is default.
 
         Returns
         -------
@@ -127,7 +138,7 @@ class Problem:
         else:
             type_of_var = type(X)
 
-        if type_of_var != self.type_var:
+        if check_var_type and type_of_var != self.type_var:
             raise Exception('As variable type for this problem %s was defined. However, it is evaluated with %s!'
                             % (self.type_var, type_of_var))
 

@@ -41,6 +41,12 @@ Contact
 .. include:: _contact.rst
 
 
+Changelog
+==================================
+
+.. include:: _changelog.rst
+
+
 References
 ==================================
 
@@ -48,11 +54,4 @@ References
 .. bibliography:: references.bib
    :style: unsrt
    :all:
-
-
-
-Changelog
-==================================
-
-.. include:: _changelog.rst
 

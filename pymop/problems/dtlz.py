@@ -4,9 +4,17 @@ from pymop.problem import Problem
 
 
 class DTLZ(Problem):
-    def __init__(self, n_var, n_obj):
+    def __init__(self, n_var, n_obj, k=None):
+
+        if n_var:
+            self.k = n_var - n_obj + 1
+        elif k:
+            self.k = k
+            n_var = k + n_obj - 1
+        else:
+            raise Exception("Either provide number of variables or k!")
+
         super().__init__(n_var=n_var, n_obj=n_obj, n_constr=0, xl=0, xu=1, type_var=np.double)
-        self.k = self.n_var - self.n_obj + 1
 
     def g1(self, X_M):
         return 100 * (self.k + np.sum(np.square(X_M - 0.5) - np.cos(20 * np.pi * (X_M - 0.5)), axis=1))
@@ -132,7 +140,8 @@ class DTLZ7(DTLZ):
 class ScaledProblem(Problem):
 
     def __init__(self, problem, scale_factor):
-        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
+        super().__init__(n_var=problem.n_var, n_obj=problem.n_obj, n_constr=problem.n_constr,
+                         xl=problem.xl, xu=problem.xu, type_var=problem.type_var)
         self.problem = problem
         self.scale_factor = scale_factor
 
@@ -145,14 +154,14 @@ class ScaledProblem(Problem):
         F = t[0] * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
         return tuple([F] + list(t)[1:])
 
-    def _calc_pareto_front(self):
-        return self.problem.pareto_front() * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
+    def _calc_pareto_front(self, *args, **kwargs):
+        return self.problem.pareto_front(*args, **kwargs) * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
 
 
 class ConvexProblem(Problem):
 
     def __init__(self, problem):
-        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu, problem.func)
+        super().__init__(problem.n_var, problem.n_obj, problem.n_constr, problem.xl, problem.xu)
         self.problem = problem
 
     @staticmethod
@@ -166,6 +175,6 @@ class ConvexProblem(Problem):
         F = np.power(t[0], ConvexProblem.get_power(self.n_obj))
         return tuple([F] + list(t)[1:])
 
-    def _calc_pareto_front(self):
-        F = self.problem.pareto_front()
+    def _calc_pareto_front(self, ref_dirs, *args, **kwargs):
+        F = self.problem.pareto_front(ref_dirs)
         return np.power(F, ConvexProblem.get_power(self.n_obj))

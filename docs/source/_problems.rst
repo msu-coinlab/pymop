@@ -6,7 +6,6 @@ included:
 -  Single-Objective:
 
    -  Ackley
-   -  BNH
    -  Griewank
    -  Knapsack
    -  Schwefel

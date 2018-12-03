@@ -16,7 +16,7 @@ class BNH(Problem):
         g[:, 0] = (1 / 25) * ((x[:, 0] - 5) ** 2 + x[:, 1] ** 2 - 25)
         g[:, 1] = -1 / 7.7 * ((x[:, 0] - 8) ** 2 + (x[:, 1] + 3) ** 2 - 7.7)
 
-    def _calc_pareto_front(self, n_pareto_points):
+    def _calc_pareto_front(self, n_pareto_points=100):
         x1 = np.linspace(0, 5, n_pareto_points)
         x2 = np.copy(x1)
         x2[x1 >= 3] = 3
