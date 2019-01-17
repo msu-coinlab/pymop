@@ -15,3 +15,4 @@ from pymop.problems.truss2d import *
 from pymop.problems.welded_beam import *
 from pymop.problems.zakharov import *
 from pymop.problems.zdt import *
+from pymop.problems.g import *
