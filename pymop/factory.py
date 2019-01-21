@@ -27,7 +27,17 @@ STR_TO_PROBLEM = {
     'zdt2': ZDT2,
     'zdt3': ZDT3,
     'zdt4': ZDT4,
-    'zdt6': ZDT6
+    'zdt6': ZDT6,
+    'g01': G1,
+    'g02': G2,
+    'g03': G3,
+    'g04': G4,
+    'g05': G5,
+    'g06': G6,
+    'g07': G7,
+    'g08': G8,
+    'g09': G9,
+    'g10': G10
 }
 
 
