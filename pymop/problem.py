@@ -1,6 +1,11 @@
+import warnings
 from abc import abstractmethod
 
+import autograd
 import numpy as np
+import autograd.numpy as anp
+
+from pymop.gradient import calc_and_trace, calc_jacobian
 
 
 class Problem:
@@ -11,7 +16,7 @@ class Problem:
     and ideal point are stored.
     """
 
-    def __init__(self, n_var=-1, n_obj=-1, n_constr=0, xl=None, xu=None, type_var=np.double):
+    def __init__(self, n_var=-1, n_obj=-1, n_constr=0, xl=None, xu=None, type_var=np.double, evaluation_of="auto"):
         """
 
         Parameters
@@ -53,6 +58,18 @@ class Problem:
         # the pareto front will be calculated only once and is stored here
         self._pareto_front = None
 
+        # the pareto set of this problem
+        self._pareto_set = None
+
+        # actually defines what _evaluate is setting during the evaluation
+        if evaluation_of == "auto":
+            # by default F is set, and G if the problem does have constraints
+            self.evaluation_of = ["F"]
+            if self.n_constr > 0:
+                self.evaluation_of.append("G")
+        else:
+            self.evaluation_of = evaluation_of
+
     # return the maximum objective values of the pareto front
     def nadir_point(self):
         """
@@ -89,10 +106,23 @@ class Problem:
 
         return self._pareto_front
 
-    def evaluate(self, X, *args,
-                 return_constraint_violation=True,
-                 return_constraints=False,
-                 check_var_type=False,
+    def pareto_set(self, *args, **kwargs):
+        """
+        Returns
+        -------
+        S : np.array
+            Returns the pareto set for a problem. Points in the X space to be known to be optimal!
+        """
+        if self._pareto_set is None:
+            self._pareto_set = self._calc_pareto_set(*args, **kwargs)
+
+        return self._pareto_set
+
+    def evaluate(self,
+                 X,
+                 *args,
+                 return_values_of=("F", "CV"),
+                 return_as_dictionary=False,
                  **kwargs):
 
         """
@@ -104,75 +134,105 @@ class Problem:
 
         Parameters
         ----------
+
         X : np.array
             A two dimensional matrix where each row is a point to evaluate and each column a variable.
 
-        return_constraint_violation : bool
-            Whether the constraint violation is returned or not. If no constraint exists,
-            an array with zero values is returned. Default: True.
-            
-        return_constraints : bool
-            Whether all constraint values are returned or not. Default: False.
+        return_as_dictionary : bool
 
-        check_var_type : bool
-            Whether data types are checked to match or not. Might be desired if input is boolean and
-            vector is real. However, lazy behaviour to just treat the input as it is, is default.
+        return_values_of : list of strings
+
 
         Returns
         -------
-        F : np.array
-            Objective Values
-        CV : np.array
-            Constraint Violations as a two dimensional array.
-        G : np.array
-            Constraints as a two dimensional array.
 
         """
 
+        # make the array at least 2-d - even if only one row should be evaluated
         only_single_value = len(np.shape(X)) == 1
-        if only_single_value:
-            X = np.array([X])
-
-        if isinstance(X, np.ndarray):
-            type_of_var = X.dtype
-        else:
-            type_of_var = type(X)
-
-        if check_var_type and type_of_var != self.type_var:
-            raise Exception('As variable type for this problem %s was defined. However, it is evaluated with %s!'
-                            % (self.type_var, type_of_var))
+        X = np.atleast_2d(X)
 
         # check the dimensionality of the problem and the given input
         if X.shape[1] != self.n_var:
             raise Exception('Input dimension %s are not equal to n_var %s!' % (X.shape[1], self.n_var))
 
-        # create the objective value array
-        F = np.zeros((X.shape[0], self.n_obj))
+        # create the output dictionary for _evaluate to be filled
+        out = {}
+        for val in return_values_of:
+            out[val] = None
 
-        # create the constraint array and add to params
-        G = np.zeros((X.shape[0], self.n_constr))
+        # all values that are set in the evaluation function
+        values_not_set = [val for val in return_values_of if val not in self.evaluation_of]
 
-        if self.n_constr > 0:
-            args = [G] + list(args)
+        # have a look if gradients are not set and try to use autograd and calculate grading if implemented using it
+        gradients_not_set = [val for val in values_not_set if val.startswith("d")]
 
-        # call the function to evaluate
-        self._evaluate(X, F, *args, **kwargs)
+        # if no autograd is necessary for evaluation just traditionally use the evaluation method
+        if len(gradients_not_set) == 0:
+            self._evaluate(X, out, *args, **kwargs)
+            at_least2d(out)
 
-        # create the returned values in a list
-        vals = [F]
-        if return_constraint_violation:
-            vals.append(Problem.calc_constraint_violation(G))
-        if return_constraints:
-            vals.append(G)
-
-        # convert back if just one vector is evaluated
-        if only_single_value:
-            vals = [e[0, :] for e in vals]
-
-        if len(vals) > 1:
-            return tuple(vals)
+        # otherwise try to use autograd to calculate the gradient for this problem
         else:
-            return vals[0]
+
+            # calculate the function value by tracing all the calculations
+            root = calc_and_trace(self._evaluate, X, *[out])
+            at_least2d(out)
+
+            # the dictionary where the values are stored
+            deriv = {}
+
+            # if the result is calculated to be derivable
+            for key, val in out.items():
+
+                # if yes it is already a derivative
+                if key.startswith("d"):
+                    continue
+
+                name = "d" + key
+                is_derivable = (type(val) == autograd.numpy.numpy_boxes.ArrayBox)
+
+                # if should be returned AND was not calculated yet AND is derivable using autograd
+                if name in return_values_of and out.get(name) is None and is_derivable:
+                    # calculate the jacobian matrix and set it - (ignore warnings of autograd here)
+                    with warnings.catch_warnings():
+                        warnings.simplefilter("ignore")
+                        jac = calc_jacobian(root, val, X)
+                        deriv[name] = jac
+
+            # merge to the output
+            out = {**out, **deriv}
+
+            # convert back to conventional numpy arrays - no array box as return type
+            for key in out.keys():
+                if type(out[key]) == autograd.numpy.numpy_boxes.ArrayBox:
+                    out[key] = out[key]._value
+
+        # if constraint violation should be returned as well
+        if self.n_constr == 0:
+            out["CV"] = np.zeros([X.shape[0], 1])
+        else:
+            out["CV"] = Problem.calc_constraint_violation(out["G"])
+
+        # if an additional boolean flag for feasibility should be returned
+        if "feasible" in return_values_of:
+            out["feasible"] = (out["CV"] <= 0)
+
+        # remove the first dimension of the output - in case input was a 1d- vector
+        if only_single_value:
+            for key in out.keys():
+                if out[key] is not None:
+                    out[key] = out[key][0, :]
+
+        if return_as_dictionary:
+            return out
+        else:
+
+            # if just a single value do not return a tuple
+            if len(return_values_of) == 1:
+                return out[return_values_of[0]]
+            else:
+                return tuple([out[val] for val in return_values_of])
 
     @abstractmethod
     def _evaluate(self, x, f, *args, **kwargs):
@@ -200,6 +260,9 @@ class Problem:
         """
         pass
 
+    def _calc_pareto_set(self, *args, **kwargs):
+        pass
+
     # some problem information
     def __str__(self):
         s = "# name: %s\n" % self.name()
@@ -219,3 +282,10 @@ class Problem:
             return np.zeros(G.shape[0])[:, None]
         else:
             return np.sum(G * (G > 0).astype(np.float), axis=1)[:, None]
+
+
+# makes all the output at least 2-d dimensional
+def at_least2d(d):
+    for key in d.keys():
+        if len(np.shape(d[key])) == 1:
+            d[key] = d[key][:, None]

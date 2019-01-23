@@ -1,13 +1,15 @@
 import os
 
 import numpy as np
+import autograd.numpy as anp
+
 
 
 def load_pareto_front_from_file(fname):
     current_dir = os.path.dirname(os.path.realpath(__file__))
     fname = os.path.join(current_dir, "pf", "%s" % fname)
     if os.path.isfile(fname):
-        return np.loadtxt(fname)
+        return anp.loadtxt(fname)
 
 
 def get_uniform_weights(n_points, n_dim):
@@ -63,9 +65,9 @@ class UniformReferenceDirectionFactory:
 
     def uniform_reference_directions(self, n_partitions, n_dim):
         ref_dirs = []
-        ref_dir = np.full(n_dim, np.inf)
+        ref_dir = anp.full(n_dim, anp.inf)
         self.__uniform_reference_directions(ref_dirs, ref_dir, n_partitions, n_partitions, 0)
-        return np.concatenate(ref_dirs, axis=0)
+        return anp.concatenate(ref_dirs, axis=0)
 
     def __uniform_reference_directions(self, ref_dirs, ref_dir, n_partitions, beta, depth):
         if depth == len(ref_dir) - 1:
@@ -74,7 +76,7 @@ class UniformReferenceDirectionFactory:
         else:
             for i in range(beta + 1):
                 ref_dir[depth] = 1.0 * i / (1.0 * n_partitions)
-                self.__uniform_reference_directions(ref_dirs, np.copy(ref_dir), n_partitions, beta - i,
+                self.__uniform_reference_directions(ref_dirs, anp.copy(ref_dir), n_partitions, beta - i,
                                                     depth + 1)
 
 

@@ -5,24 +5,15 @@ import numpy as np
 from pymop.factory import get_problem_from_func
 
 
-def my_evaluate_func(x):
-    import numpy as np
-
-    # number of inputs to calculate the objective for
-    n = x.shape[0]
-
-    # define output array for two objectives and one constraint
-    f = np.full((n, 2), np.inf)
-    g = np.full((n, 1), np.inf)
+def my_evaluate_func(x, out, *args, **kwargs):
 
     # define the objective as x^2
-    f[:, 0] = np.sum(np.square(x - 2))
-    f[:, 1] = np.sum(np.square(x + 2))
+    f1 = np.sum(np.square(x - 2), axis=1)
+    f2 = np.sum(np.square(x + 2), axis=1)
+    out["F"] = np.column_stack([f1, f2])
 
     # x^2 < 2 constraint
-    g[:, 0] = np.sum(np.square(x - 1))
-
-    return f, g
+    out["G"] = np.sum(np.square(x - 1), axis=1)
 
 
 # load the problem from a function - define 3 variables with the same lower bound

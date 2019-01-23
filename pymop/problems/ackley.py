@@ -1,4 +1,4 @@
-import numpy as np
+import autograd.numpy as np
 
 from pymop.problem import Problem
 
@@ -11,12 +11,10 @@ class Ackley(Problem):
         self.c2 = c2
         self.c3 = c3
 
-    def _evaluate(self, x, f, *args, **kwargs):
+    def _evaluate(self, x, out, *args, **kwargs):
         part1 = -1. * self.c1 * np.exp(-1. * self.c2 * np.sqrt((1. / self.n_var) * np.sum(x * x, axis=1)))
         part2 = -1. * np.exp((1. / self.n_var) * np.sum(np.cos(self.c3 * x), axis=1))
-        f[:, 0] = part1 + part2 + self.c1 + np.exp(1)
+        out["F"] = part1 + part2 + self.c1 + np.exp(1)
 
     def _calc_pareto_front(self):
         return np.zeros((1, 1))
-
-

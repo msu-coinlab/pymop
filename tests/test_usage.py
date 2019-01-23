@@ -17,6 +17,7 @@ class UsageTest(unittest.TestCase):
                 try:
                     exec(s, globals())
                 except Exception as e:
+                    print(fname)
                     print(e)
                     raise Exception("Usage %s failed." % fname)
 

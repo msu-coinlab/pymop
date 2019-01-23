@@ -1,4 +1,4 @@
-import numpy as np
+import autograd.numpy as anp
 
 from pymop.problem import Problem
 
@@ -6,41 +6,34 @@ from pymop.problem import Problem
 # always derive from the main problem for the evaluation
 class MyProblem(Problem):
 
-    def __init__(self, var1=5, var2=0.1):
-        super().__init__.__init__(self)
-
-        # define the variable type which will be checked before the evaluation
-        self.type_var = np.double
-
-        # define the number of variables the problem has
-        self.n_var = 10
-
-        # define the number of constraints
-        self.n_constr = 2
-
-        # the number of objectives - just set it to 1 if single-objective
-        self.n_obj = 1
+    def __init__(self, const_1=5, const_2=0.1):
 
         # define lower and upper bounds -  1d array with length equal to number of variable
-        self.xl = -5 * np.ones(self.n_var)
-        self.xu = 5 * np.ones(self.n_var)
+        xl = -5 * anp.ones(10)
+        xu = 5 * anp.ones(10)
+
+        super().__init__(n_var=10, n_obj=1, n_constr=2, xl=xl, xu=xu, evaluation_of="auto")
 
         # store custom variables needed for evaluation
-        self.var1 = var1
-        self.var2 = var2
+        self.const_1 = const_1
+        self.const_2 = const_2
 
     # implemented the function evaluation function - the arrays to fill are provided directly
-    def _evaluate(self, x, f, g, *args, **kwargs):
+    def _evaluate(self, x, out, *args, **kwargs):
         # define an objective function to be evaluated using var1
-        f[:, 0] = np.sum(np.power(x, 2) - self.var1 * np.cos(2 * np.pi * x), axis=1)
+        f = anp.sum(anp.power(x, 2) - self.const_1 * anp.cos(2 * anp.pi * x), axis=1)
 
         # !!! only if a constraint value is positive it is violated !!!
         # set the constraint that x1 + x2 > var2
-        g[:, 0] = (x[:, 0] + x[:, 1]) - self.var2
+        g1 = (x[:, 0] + x[:, 1]) - self.const_2
 
         # set the constraint that x3 + x4 < var2
-        g[:, 1] = self.var2 - (x[:, 2] + x[:, 3])
+        g2 = self.const_2 - (x[:, 2] + x[:, 3])
+
+        out["F"] = f
+        out["G"] = anp.column_stack([g1, g2])
 
 
 problem = MyProblem()
-F, G = problem.evaluate(np.random.rand(100, 10))
+F, G, CV, feasible, dF, dG = problem.evaluate(anp.random.rand(100, 10),
+                                              return_values_of=["F", "G", "CV", "feasible", "dF", "dG"])

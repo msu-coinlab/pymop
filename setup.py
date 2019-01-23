@@ -8,7 +8,7 @@ def readme():
 
 __name__ = "pymop"
 __author__ = "Julian Blank"
-__version__ = '0.2.3'
+__version__ = '0.2.4.dev'
 __url__ = "https://github.com/msu-coinlab/pymop"
 
 setup(
@@ -21,7 +21,7 @@ setup(
     url=__url__,
     license='Apache License 2.0',
     keywords="optimization",
-    install_requires=['numpy'],
+    install_requires=['numpy', "autograd"],
     packages=find_packages(exclude=['tests', 'docs']),
     include_package_data=True,
     platforms='any',

@@ -65,19 +65,19 @@ if __name__ == "__main__":
     # execute the method - use stdin and stdout if necessary
     if par_func == "evaluate":
 
-        X = np.loadtxt(sys.stdin.readlines(), dtype=np.float)
+        X = anp.loadtxt(sys.stdin.readlines(), dtype=anp.float)
 
         if len(X.shape) == 1:
             X = X[None, :]
 
         F, G = problem.evaluate(X)
         if problem.n_constr > 0:
-            F = np.concatenate([F, G], axis=1)
+            F = anp.concatenate([F, G], axis=1)
 
-        np.savetxt(sys.stdout, F, fmt='%.18e', delimiter=' ')
+        anp.savetxt(sys.stdout, F, fmt='%.18e', delimiter=' ')
 
     elif par_func == 'front':
-        np.savetxt(par_out, problem._calc_pareto_front(), fmt='%.18e', delimiter=' ')
+        anp.savetxt(par_out, problem._calc_pareto_front(), fmt='%.18e', delimiter=' ')
 
     elif par_func == 'info':
         import json
