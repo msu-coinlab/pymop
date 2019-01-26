@@ -194,6 +194,7 @@ class Problem:
 
                 # if should be returned AND was not calculated yet AND is derivable using autograd
                 if name in return_values_of and out.get(name) is None and is_derivable:
+
                     # calculate the jacobian matrix and set it - (ignore warnings of autograd here)
                     with warnings.catch_warnings():
                         warnings.simplefilter("ignore")

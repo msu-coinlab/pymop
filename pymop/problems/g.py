@@ -29,8 +29,8 @@ class G1(Problem):
         g7 = -2 * x[:, 3] - x[:, 4] + x[:, 9]
         g8 = -2 * x[:, 5] - x[:, 6] + x[:, 10]
         g9 = -2 * x[:, 7] - x[:, 8] + x[:, 11]
-        
-        out["F"] = f[:, None]
+
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2, g3, g4, g5, g6, g7, g8, g9])
 
     def _calc_pareto_front(self):
@@ -52,7 +52,6 @@ class G2(Problem):
                                  type_var=anp.double)
 
     def _evaluate(self, x, out, *args, **kwargs):
-
         l = []
         for j in range(self.n_var):
             l.append((j + 1) * x[:, j] ** 2)
@@ -61,13 +60,15 @@ class G2(Problem):
         a = anp.sum(anp.cos(x) ** 4, axis=1)
         b = 2 * anp.prod(anp.cos(x) ** 2, axis=1)
         c = (anp.sqrt(sum_jx)).flatten()
+        c[c == 0] = 1e-20
+
         f = -anp.absolute((a - b) / c)
 
         # Constraints
         g1 = -anp.prod(x, 1) + 0.75
         g2 = anp.sum(x, axis=1) - 7.5 * self.n_var
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2])
 
     def _calc_pareto_front(self):
@@ -99,8 +100,8 @@ class G3(Problem):
         # Constraints
         g = anp.absolute(anp.sum(x ** 2, axis=1) - 1) - 1e-4
 
-        out["F"] = f[:, None]
-        out["G"] = g[:, None]
+        out["F"] = f
+        out["G"] = g
 
     def _calc_pareto_front(self):
         return -1.00050010001000
@@ -138,7 +139,7 @@ class G4(Problem):
         g5 = -w + 20
         g6 = w - 25
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2, g3, g4, g5, g6])
 
     def _calc_pareto_front(self):
@@ -172,7 +173,7 @@ class G5(Problem):
             1000 * (anp.sin(x[:, 2] - 0.25) + anp.sin(x[:, 2] - x[:, 3] - 0.25)) + 894.8 - x[:, 1]) - 10 ** (-4)
         g5 = anp.absolute(1000 * (anp.sin(x[:, 3] - 0.25) + anp.sin(x[:, 3] - x[:, 2] - 0.25)) + 1294.8) - 10 ** (-4)
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2, g3, g4, g5])
 
     def _calc_pareto_front(self):
@@ -201,7 +202,7 @@ class G6(Problem):
         g1 = -(x[:, 0] - 5) ** 2 - (x[:, 1] - 5) ** 2 + 100
         g2 = (x[:, 0] - 6) ** 2 + (x[:, 1] - 5) ** 2 - 82.81
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2])
 
     def _calc_pareto_front(self):
@@ -225,8 +226,8 @@ class G7(Problem):
 
     def _evaluate(self, x, out, *args, **kwargs):
         f = x[:, 0] ** 2 + x[:, 1] ** 2 + x[:, 0] * x[:, 1] - 14 * x[:, 0] - 16 * x[:, 1] + (x[:, 2] - 10) ** 2 \
-                  + 4 * (x[:, 3] - 5) ** 2 + (x[:, 4] - 3) ** 2 + 2 * (x[:, 5] - 1) ** 2 + 5 * x[:, 6] ** 2 \
-                  + 7 * (x[:, 7] - 11) ** 2 + 2 * (x[:, 8] - 10) ** 2 + (x[:, 9] - 7) ** 2 + 45
+            + 4 * (x[:, 3] - 5) ** 2 + (x[:, 4] - 3) ** 2 + 2 * (x[:, 5] - 1) ** 2 + 5 * x[:, 6] ** 2 \
+            + 7 * (x[:, 7] - 11) ** 2 + 2 * (x[:, 8] - 10) ** 2 + (x[:, 9] - 7) ** 2 + 45
 
         # Constraints
         g1 = 4 * x[:, 0] + 5 * x[:, 1] - 3 * x[:, 6] + 9 * x[:, 7] - 105
@@ -238,7 +239,7 @@ class G7(Problem):
         g7 = x[:, 0] ** 2 + 2 * (x[:, 1] - 2) ** 2 - 2 * x[:, 0] * x[:, 1] + 14 * x[:, 4] - 6 * x[:, 5]
         g8 = -3 * x[:, 0] + 6 * x[:, 1] + 12 * (x[:, 8] - 8) ** 2 - 7 * x[:, 9]
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2, g3, g4, g5, g6, g7, g8])
 
     def _calc_pareto_front(self):
@@ -264,13 +265,13 @@ class G8(Problem):
 
     def _evaluate(self, x, out, *args, **kwargs):
         f = -(anp.sin(2 * math.pi * x[:, 0]) ** 3 * anp.sin(2 * math.pi * x[:, 1])) / (
-                    x[:, 0] ** 3 * (x[:, 0] + x[:, 1]))
+                x[:, 0] ** 3 * (x[:, 0] + x[:, 1]))
 
         # Constraints
         g1 = x[:, 0] ** 2 - x[:, 1] + 1
         g2 = 1 - x[:, 0] + (x[:, 1] - 4) ** 2
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2])
 
     def _calc_pareto_front(self):
@@ -294,8 +295,8 @@ class G9(Problem):
 
     def _evaluate(self, x, out, *args, **kwargs):
         f = (x[:, 0] - 10) ** 2 + 5 * (x[:, 1] - 12) ** 2 + x[:, 2] ** 4 \
-                  + 3 * (x[:, 3] - 11) ** 2 + 10 * x[:, 4] ** 6 + 7 * x[:, 5] ** 2 \
-                  + x[:, 6] ** 4 - 4 * x[:, 5] * x[:, 6] - 10 * x[:, 5] - 8 * x[:, 6]
+            + 3 * (x[:, 3] - 11) ** 2 + 10 * x[:, 4] ** 6 + 7 * x[:, 5] ** 2 \
+            + x[:, 6] ** 4 - 4 * x[:, 5] * x[:, 6] - 10 * x[:, 5] - 8 * x[:, 6]
 
         # Constraints
         v1 = 2 * x[:, 0] ** 2
@@ -339,7 +340,7 @@ class G10(Problem):
         g5 = x[:, 1] * x[:, 3] - x[:, 1] * x[:, 6] - 1250 * x[:, 3] + 1250 * x[:, 4]
         g6 = x[:, 2] * x[:, 4] - x[:, 2] * x[:, 7] - 2500. * x[:, 4] + 1250000
 
-        out["F"] = f[:, None]
+        out["F"] = f
         out["G"] = anp.column_stack([g1, g2, g3, g4, g5, g6])
 
     def _calc_pareto_front(self):

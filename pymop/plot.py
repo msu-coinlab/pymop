@@ -11,7 +11,7 @@ def plot_problem_surface(problem, n_samples, plot_type="wireframe"):
     if problem.n_var == 1 and problem.n_obj == 1:
 
         X = np.linspace(problem.xl[0], problem.xu[0], num=n_samples)[:, None]
-        Y = problem.evaluate(X, return_constraint_violation=False)
+        Y = problem.evaluate(X, return_values_of=["F"])
         plt.plot(X, Y)
 
     elif problem.n_var == 2 and problem.n_obj == 1:
@@ -29,7 +29,7 @@ def plot_problem_surface(problem, n_samples, plot_type="wireframe"):
                 A[counter, 1] = y
                 counter += 1
 
-        F = np.reshape(problem.evaluate(A, return_constraint_violation=False), (n_samples, n_samples))
+        F = np.reshape(problem.evaluate(A, return_values_of=["F"]), (n_samples, n_samples))
 
         fig = plt.figure()
         # Plot the surface.

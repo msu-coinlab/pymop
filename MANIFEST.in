@@ -1,2 +1,2 @@
-recursive-include pymop *.py
+recursive-include pymop *.py *.pf
 recursive-include external *
