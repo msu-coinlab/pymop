@@ -13,6 +13,8 @@ STR_TO_PROBLEM = {
     'dtlz7': DTLZ7,
     'c1dtlz1': C1DTLZ1,
     'c1dtlz3': C1DTLZ3,
+    'c2dtlz2': C2DTLZ2,
+    'c3dtlz4': C3DTLZ4,
     'griewank': Griewank,
     'knp': Knapsack,
     'kursawe': Kursawe,

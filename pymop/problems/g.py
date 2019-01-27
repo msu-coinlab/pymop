@@ -60,7 +60,8 @@ class G2(Problem):
         a = anp.sum(anp.cos(x) ** 4, axis=1)
         b = 2 * anp.prod(anp.cos(x) ** 2, axis=1)
         c = (anp.sqrt(sum_jx)).flatten()
-        c[c == 0] = 1e-20
+        if anp.any(c==0):
+            c[c == 0] = 1e-20
 
         f = -anp.absolute((a - b) / c)
 
