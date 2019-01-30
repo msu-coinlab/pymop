@@ -1,7 +1,24 @@
 import autograd.numpy as anp
 import matplotlib.pyplot as plt
-from pymop.problems.dtlz import DTLZ, DTLZ1, DTLZ2, DTLZ3, DTLZ4
+from pymop.problems.dtlz import DTLZ, DTLZ1, DTLZ2, DTLZ3, DTLZ4, generic_sphere
 from pymop.util import UniformReferenceDirectionFactory
+
+
+class DTLZ4B(DTLZ):
+    def __init__(self, n_var=10, n_obj=3, alpha=100, d=100, **kwargs):
+        super().__init__(n_var, n_obj, **kwargs)
+        self.alpha = alpha
+        self.d = d
+    def g2(self, X_M):
+        return 100*anp.sum(anp.square(X_M - 0.5), axis=1)
+
+    def _calc_pareto_front(self, ref_dirs):
+        return generic_sphere(ref_dirs)
+
+    def _evaluate(self, x, out, *args, **kwargs):
+        X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
+        g = self.g2(X_M)
+        out["F"] = self.obj_func(X_, g, alpha=self.alpha)
 
 class C1DTLZ1(DTLZ1):
 
@@ -151,9 +168,49 @@ class CDTLZ(DTLZ):
 
     def __init__(self, dtlz, clist=None, rlist=None, **kwargs):
 
-        assert len(clist) == len(rlist)
+        # assert len(clist) == len(rlist)
+        clist = anp.asarray(clist)
+        self.clist = anp.unique(clist)
+        self.n_obj = dtlz.n_obj
+
+        if rlist is None:
+            rlist = []
+            for i in range(len(self.clist)):
+                if self.clist[i] == 1:
+                    if self.n_obj < 5:
+                        rlist.append(20.0)  # rlist.append(9.0)
+                    elif 5 <= self.n_obj <= 12:
+                        rlist.append(20.0)  # rlist.append(12.5)
+                    elif self.n_obj <= 15:
+                        rlist.append(20.0)  # rlist.append(15.0)
+                    else:
+                        raise Exception("Parameter r for C1 is not defined for Obj. "+self.n_obj)
+                elif self.clist[i] == 2:
+                    if self.n_obj == 2:
+                        rlist.append(0.2)
+                    elif self.n_obj == 3:
+                        rlist.append(0.4)
+                    else:
+                        rlist.append(0.5)
+                elif self.clist[i] == 4:
+                    if self.n_obj == 2:
+                        rlist.append(0.225)
+                    elif self.n_obj == 3:
+                        rlist.append(0.225)
+                    elif self.n_obj == 5:
+                        rlist.append(0.225)
+                    elif self.n_obj == 8:
+                        rlist.append(0.26)
+                    elif self.n_obj == 10:
+                        rlist.append(0.26)
+                    elif self.n_obj == 15:
+                        rlist.append(0.27)
+                    else:
+                        raise Exception("Parameter r for C4 is not defined for Obj. " + self.n_obj)
+                else:
+                    rlist.append(0)
+
         self.rlist = anp.asarray(rlist)
-        self.clist = anp.asarray(clist)
         self.dtlz = dtlz
 
         super().__init__(n_var=dtlz.n_var, n_obj=dtlz.n_obj, **kwargs)
@@ -165,7 +222,7 @@ class CDTLZ(DTLZ):
             self.dtlz_type = 2
         elif isinstance(dtlz, DTLZ3):
             self.dtlz_type = 3
-        elif isinstance(dtlz, DTLZ4):
+        elif isinstance(dtlz, DTLZ4) or isinstance(dtlz, DTLZ4B):
             self.dtlz_type = 4
         else:
             raise Exception("DTLZ problem not supported.")
@@ -174,7 +231,6 @@ class CDTLZ(DTLZ):
 
         # merge the result we get from the dtlz
         self.dtlz._evaluate(X, out, *args, **kwargs)
-
         g = []
         for i in range(self.n_constr):
             if self.clist[i] == 1:
@@ -189,7 +245,7 @@ class CDTLZ(DTLZ):
                     _g = constraint_c3_linear(out["F"])
                 else:
                     _g = constraint_c3_spherical(out["F"])
-            elif self.self.clist[i] == 4:
+            elif self.clist[i] == 4:
                 _g = constraint_c4_cylindrical(out["F"], self.rlist[i])
             else:
                 _g = []
@@ -202,16 +258,31 @@ class CDTLZ(DTLZ):
 
         F = self.dtlz.pareto_front(ref_dirs, *args, **kwargs)
 
-        if anp.any(self.clist == 3):
-            a = anp.sqrt(anp.sum(F ** 2, 1) - 3 / 4 * anp.max(F ** 2, axis=1))
-            a = anp.expand_dims(a, axis=1)
-            a = anp.tile(a, [1, ref_dirs.shape[1]])
-            F = F / a
-        elif anp.any(self.clist == 2):
+        if anp.any(self.clist == 3) and not anp.any(self.clist == 2):
+            if self.dtlz_type == 1:
+                F = 0.5 * ref_dirs
+            else:
+                a = anp.sqrt(anp.sum(F ** 2, 1) - 3 / 4 * anp.max(F ** 2, axis=1))
+                a = anp.expand_dims(a, axis=1)
+                a = anp.tile(a, [1, ref_dirs.shape[1]])
+                F = F / a
+
+                if anp.any(self.clist == 4):  # 3 and 4 together
+                    r = self.rlist[anp.where(self.clist == 4)][0]
+                    _g = constraint_c4_cylindrical(F, r)
+                    _g[_g <= 0] = 0
+                    F = F[_g <= 0]
+
+        elif anp.any(self.clist == 2):  # C2 cannot be with C3
             r = self.rlist[anp.where(self.clist == 2)][0]
             _g = constraint_c2(F, r)
             _g[_g <= 0] = 0
             F = F[_g <= 0]
+            if anp.any(self.clist == 4):  # 2 and 4 together
+                r = self.rlist[anp.where(self.clist == 4)][0]
+                _g = constraint_c4_cylindrical(F, r)
+                _g[_g <= 0] = 0
+                F = F[_g <= 0]
         elif anp.any(self.clist == 4):
             r = self.rlist[anp.where(self.clist == 4)][0]
             _g = constraint_c4_cylindrical(F, r)
@@ -221,21 +292,29 @@ class CDTLZ(DTLZ):
         return F
 
 
-problems = [('CDTLZ', [DTLZ3(n_var=2, n_obj=2), [1, 3], [6, 0]])]
+problems = [('CDTLZ', [DTLZ3(n_var=2, n_obj=2), [1]]),
+            ('CDTLZ', [DTLZ3(n_var=2, n_obj=2), [1, 2]]),
+            ('CDTLZ', [DTLZ3(n_var=2, n_obj=2), [1, 3, 4]]),
+            ('CDTLZ', [DTLZ3(n_var=2, n_obj=2), [3, 4]]),
+            ('CDTLZ', [DTLZ4B(n_var=2, n_obj=2), [1, 4]]),
+            ('CDTLZ', [DTLZ4B(n_var=2, n_obj=2), [1, 3, 4]]),
+            ('CDTLZ', [DTLZ1(n_var=2, n_obj=2), [1]]),
+            ]
 
 if __name__ == '__main__':
 
     for prob_no, entry in enumerate(problems):
         name, params = entry
-        print("Plotting: " + name)
+
         problem = globals()[name](*params)
+        print("Plotting: " + problem.dtlz.name())
         if isinstance(problem.dtlz, DTLZ1):
             dtlz_type = 1
         elif isinstance(problem.dtlz, DTLZ2):
             dtlz_type = 2
         elif isinstance(problem.dtlz, DTLZ3):
             dtlz_type = 3
-        elif isinstance(problem.dtlz, DTLZ4):
+        elif isinstance(problem.dtlz, DTLZ4) or isinstance(problem.dtlz, DTLZ4B):
             dtlz_type = 4
         else:
             raise Exception("DTLZ problem not supported.")
@@ -277,10 +356,11 @@ if __name__ == '__main__':
         ref_dirs = UniformReferenceDirectionFactory(n_dim=problem.n_obj, n_points=21).do()
         PF = problem._calc_pareto_front(ref_dirs)
 
-        plt.title(name)
+        plt.clf()
+        plt.title(problem.dtlz.name())
         plt.plot(F1, F2, 'o', color='#DCDCDC')  # '#A9A9A9'
         plt.plot(F1[index], F2[index], 'o', color='b')
         plt.plot(PF[:, 0], PF[:, 1], 'o', color='r')
 
-    plt.show()
+        plt.show()
 
