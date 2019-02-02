@@ -1,16 +1,26 @@
 
-In this package single- as well as multi-objective test problems are
-included:
+.. csv-table:: Single-Objective Problems
+   :file: _tables/single_objective.csv
+   :header-rows: 1
+   :class: longtable
+   :widths: 3 1 1 1 7
 
 
--  Single-Objective:
+-----------------------------------
+Single-Objective Problems
+-----------------------------------
 
-   -  Ackley
-   -  Griewank
-   -  Knapsack
-   -  Schwefel
-   -  Sphere
-   -  Zakharov
+
+.. raw:: html
+   :file: _tables/header.html
+
+
+
+.. raw:: html
+   :file: _tables/single_objective.html
+
+
+
 
 -  Multi-Objective:
 

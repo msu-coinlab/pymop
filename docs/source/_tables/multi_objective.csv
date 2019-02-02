@@ -1,0 +1,9 @@
+Problem,Variables,Objectives,Constraints,Description
+BNH,2,2,2,
+Carside,7,3,10,
+Kursawe,3,2,0,
+OSY,6,2,6,
+TNK,2,2,2,
+Truss2D,3,2,1,
+WeldedBeam,4,2,4,
+Zakharov,s,1,0,

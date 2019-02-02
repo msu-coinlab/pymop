@@ -1,40 +1,71 @@
-import autograd.numpy as np
+import autograd.numpy as anp
 from autograd.core import VJPNode, vspace, backward_pass
-from autograd.tracer import trace_stack, new_box, isbox
+from autograd.tracer import new_box, isbox, toposort
 
 
-def calc_and_trace(fun, x, *args, **kwargs):
-    # create the starting node
+# runs the function by making sure the calculations are traced using autograd
+def run_and_trace(fun, x, *args, **kwargs):
     start_node = VJPNode.new_root(x)
 
-    # trace the calculations
-    with trace_stack.new_trace() as t:
-        start_box = new_box(x, t, start_node)
-        fun(start_box, *args, **kwargs)
-    return start_box
+    start_box = new_box(x, 0, start_node)
+    out = fun(start_box, *args, **kwargs)
+
+    return start_box, out
 
 
-def calc_jacobian(start_box, end_box, x):
-    # check if the graph makes sense for derivation
-    if isbox(end_box) and end_box._trace == start_box._trace:
-        ans, end_node = end_box._value, end_box._node
-    else:
-        #warnings.warn("Output seems independent of input.")
-        ans, end_node = end_box, None
+def calc_jacobian(start, end):
 
-    if end_node is None:
-        def vjp(g):
-            return vspace(x).zeros()
-    else:
-        def vjp(g):
-            return backward_pass(g, end_node)
+    # if the end_box is not a box - autograd can not track back
+    if not isbox(end):
+        return vspace(start.shape).zeros()
 
-    # initialize the jacobian matrix
-    jac = np.full((x.shape[0], ans.shape[1], x.shape[1]), np.nan)
+    # the final jacobian matrices
+    jac = []
 
-    for j in range(ans.shape[1]):
-        m = np.zeros(ans.shape)
-        m[:, j] = 1
-        jac[:, j, :] = vjp(m)
+    # the backward pass is done for each objective function once
+    for j in range(end.shape[1]):
+        b = anp.zeros(end.shape)
+        b[:, j] = 1
+        n = new_box(b, 0, VJPNode.new_root(b))
+
+        _jac = backward_pass(n, end._node)
+
+        test = list(toposort(end._node))
+
+        jac.append(_jac)
+
+    jac = anp.stack(jac, axis=1)
 
     return jac
+
+
+def calc_hessian(start, end):
+
+    # if the end_box is not a box - autograd can not track back
+    if not isbox(end):
+        return vspace(start.shape).zeros()
+
+    # the final hessian matrices
+    hessian = []
+
+    test = list(toposort(end._node))
+
+    # for each function
+    for i in range(end.shape[1]):
+
+        # for each derivative of one variable
+        for j in range(end.shape[2]):
+
+            _end = end[:, i, j][:,None]
+
+            m = anp.zeros(_end.shape)
+            m[:, 0] = 1
+
+            _hessian = backward_pass(m, _end._node)
+
+            print("test")
+
+
+    hessian = anp.stack(hessian, axis=1)
+
+    return hessian

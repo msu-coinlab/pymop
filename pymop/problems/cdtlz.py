@@ -9,8 +9,9 @@ class DTLZ4B(DTLZ):
         super().__init__(n_var, n_obj, **kwargs)
         self.alpha = alpha
         self.d = d
+
     def g2(self, X_M):
-        return 100*anp.sum(anp.square(X_M - 0.5), axis=1)
+        return 100 * anp.sum(anp.square(X_M - 0.5), axis=1)
 
     def _calc_pareto_front(self, ref_dirs):
         return generic_sphere(ref_dirs)
@@ -19,6 +20,7 @@ class DTLZ4B(DTLZ):
         X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
         g = self.g2(X_M)
         out["F"] = self.obj_func(X_, g, alpha=self.alpha)
+
 
 class C1DTLZ1(DTLZ1):
 
@@ -106,7 +108,6 @@ class C3DTLZ4(DTLZ4):
 
 
 def constraint_c1_linear(f):
-
     g = - (1 - f[:, -1] / 0.6 - anp.sum(f[:, :-1] / 0.5, axis=1))
 
     return g
@@ -184,7 +185,7 @@ class CDTLZ(DTLZ):
                     elif self.n_obj <= 15:
                         rlist.append(20.0)  # rlist.append(15.0)
                     else:
-                        raise Exception("Parameter r for C1 is not defined for Obj. "+self.n_obj)
+                        raise Exception("Parameter r for C1 is not defined for Obj. " + self.n_obj)
                 elif self.clist[i] == 2:
                     if self.n_obj == 2:
                         rlist.append(0.2)
@@ -363,4 +364,3 @@ if __name__ == '__main__':
         plt.plot(PF[:, 0], PF[:, 1], 'o', color='r')
 
         plt.show()
-

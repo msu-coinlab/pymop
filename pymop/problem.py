@@ -5,7 +5,7 @@ import autograd
 import numpy as np
 import autograd.numpy as anp
 
-from pymop.gradient import calc_and_trace, calc_jacobian
+from pymop.gradient import run_and_trace, calc_jacobian, calc_hessian
 
 
 class Problem:
@@ -176,7 +176,7 @@ class Problem:
         else:
 
             # calculate the function value by tracing all the calculations
-            root = calc_and_trace(self._evaluate, X, *[out])
+            root, _ = run_and_trace(self._evaluate, X, *[out])
             at_least2d(out)
 
             # the dictionary where the values are stored
@@ -198,7 +198,27 @@ class Problem:
                     # calculate the jacobian matrix and set it - (ignore warnings of autograd here)
                     with warnings.catch_warnings():
                         warnings.simplefilter("ignore")
-                        jac = calc_jacobian(root, val, X)
+
+                        if "h" + key not in out:
+                            jac = calc_jacobian(root, val)
+                        else:
+
+                            def calc_gradient(X):
+                                _out = {}
+                                root, _ = run_and_trace(self._evaluate, X, *[_out])
+                                at_least2d(_out)
+                                jac = calc_jacobian(root, _out[key])
+                                return jac
+
+                            _root, jac = run_and_trace(calc_gradient, X)
+
+                            hessian = []
+                            for k in range(jac.shape[1]):
+                                _hessian = calc_jacobian(_root, jac[:, k])
+                                hessian.append(_hessian[:, None, ...])
+                            hessian = np.concatenate(hessian, axis=1)
+                            deriv["h" + key] = hessian
+
                         deriv[name] = jac
 
             # merge to the output
