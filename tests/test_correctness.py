@@ -7,11 +7,16 @@ def load(name):
     path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "resources")
 
     X = anp.loadtxt(os.path.join(path, "%s.x" % name))
-    F = anp.loadtxt(os.path.join(path, "%s.f" % name))
 
-    CV = None
-    if os.path.exists(os.path.join(path, "%s.cv" % name)):
-        CV = anp.loadtxt(os.path.join(path, "%s.cv" % name))
+    try:
+        F = anp.loadtxt(os.path.join(path, "%s.f" % name))
+
+        CV = None
+        if os.path.exists(os.path.join(path, "%s.cv" % name)):
+            CV = anp.loadtxt(os.path.join(path, "%s.cv" % name))
+
+    except:
+        return X, None, None
 
     return X, F, CV
 
@@ -22,9 +27,11 @@ problems = [
     ('C1DTLZ1', [12, 3]), ('C2DTLZ2', [12, 3]), ('C3DTLZ4', [7, 3]),
     ('ZDT1', [10]), ('ZDT2', [10]), ('ZDT3', [10]), ('ZDT4', [10]), ('ZDT6', [10]),
     ('TNK', []), ('Rosenbrock', [10]), ('Rastrigin', [10]), ('Griewank', [10]), ('OSY', []), ('Kursawe', []),
-    ('WeldedBeam', []), ('Carside', []), ('BNH', []),
+    ('WeldedBeam', []), ('Carside', []), ('BNH', []), ('CantileveredBeam', []), ('PressureVessel', []),
     ('G1', []), ('G2', []), ('G3', []), ('G4', []), ('G5', []), ('G6', []), ('G7', []), ('G8', []),
     ('G9', []), ('G10', []),
+    ('ctp1', []), ('ctp2', []), ('ctp3', []), ('ctp4', []), ('ctp5', []), ('ctp6', []), ('ctp7', []), ('ctp8', []),
+
 
 ]
 
@@ -37,6 +44,11 @@ class CorrectnessTest(unittest.TestCase):
             print("Testing: " + name)
 
             X, F, CV = load(name)
+
+            if F is None:
+                print("Warning: No correctness check for %s" % name)
+                continue
+
             problem = globals()[name](*params)
             _F, _G, _CV, _dF, _dG = problem.evaluate(X, return_values_of=["F", "G", "CV", "dF", "dG"])
 

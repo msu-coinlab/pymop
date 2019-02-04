@@ -2,10 +2,10 @@ import warnings
 from abc import abstractmethod
 
 import autograd
-import numpy as np
 import autograd.numpy as anp
+import numpy as np
 
-from pymop.gradient import run_and_trace, calc_jacobian, calc_hessian
+from pymop.gradient import run_and_trace, calc_jacobian
 
 
 class Problem:
@@ -205,9 +205,9 @@ class Problem:
 
                             def calc_gradient(X):
                                 _out = {}
-                                root, _ = run_and_trace(self._evaluate, X, *[_out])
+                                _root, _ = run_and_trace(self._evaluate, X, *[_out])
                                 at_least2d(_out)
-                                jac = calc_jacobian(root, _out[key])
+                                jac = calc_jacobian(_root, _out[key])
                                 return jac
 
                             _root, jac = run_and_trace(calc_gradient, X)
