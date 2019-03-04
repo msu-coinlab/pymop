@@ -11,5 +11,4 @@ class Rosenbrock(Problem):
         l = []
         for i in range(x.shape[1] - 1):
             l.append(100 * anp.square((x[:, i + 1] - anp.square(x[:, i]))) + anp.square((1 - x[:, i])))
-
         out["F"] = anp.sum(anp.column_stack(l), axis=1)

@@ -27,20 +27,26 @@ included:
 -  Single-Objective:
 
    -  Ackley
+   -  Cantilevered Beam
    -  Griewank
+   -  Himmelblau
    -  Knapsack
+   -  Pressure Vessel
    -  Schwefel
    -  Sphere
    -  Zakharov
+   -  G
 
 -  Multi-Objective:
 
    -  ZDT 1-6 
    -  DTLZ 1-7 
-   -  WFG 1-9 
+   -  CDTLZ
+   -  CTP
    -  Carside Impact
    -  BNH
    -  Kursawe
    -  OSY
    -  TNK
+   -  Truss 2D
    -  Welded Beam

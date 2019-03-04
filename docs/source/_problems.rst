@@ -1,35 +1,31 @@
 
-.. csv-table:: Single-Objective Problems
-   :file: _tables/single_objective.csv
-   :header-rows: 1
-   :class: longtable
-   :widths: 3 1 1 1 7
+In this package single- as well as multi-objective test problems are
+included:
 
 
------------------------------------
-Single-Objective Problems
------------------------------------
+-  Single-Objective:
 
-
-.. raw:: html
-   :file: _tables/header.html
-
-
-
-.. raw:: html
-   :file: _tables/single_objective.html
-
-
-
+   -  Ackley
+   -  Cantilevered Beam
+   -  Griewank
+   -  Himmelblau
+   -  Knapsack
+   -  Pressure Vessel
+   -  Schwefel
+   -  Sphere
+   -  Zakharov
+   -  G
 
 -  Multi-Objective:
 
    -  ZDT 1-6 :cite:`zdt`
    -  DTLZ 1-7 :cite:`dtlz`
-   -  WFG 1-9 :cite:`wfg`
+   -  CDTLZ
+   -  CTP
    -  Carside Impact
    -  BNH
    -  Kursawe
    -  OSY
    -  TNK
+   -  Truss 2D
    -  Welded Beam

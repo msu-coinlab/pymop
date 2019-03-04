@@ -1,3 +1,10 @@
+**0.2.4**
+
+* Gradient and Hessian information for all problems are available using autograd.
+* For each evaluation the list of returned values can be defined
+* cdtlz and ctp problems were added.
+
+
 **0.2.3**
 
 * Introduced a variable type to define a problem more precisely

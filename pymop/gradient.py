@@ -27,11 +27,7 @@ def calc_jacobian(start, end):
         b = anp.zeros(end.shape)
         b[:, j] = 1
         n = new_box(b, 0, VJPNode.new_root(b))
-
         _jac = backward_pass(n, end._node)
-
-        test = list(toposort(end._node))
-
         jac.append(_jac)
 
     jac = anp.stack(jac, axis=1)

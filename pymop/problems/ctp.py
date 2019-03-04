@@ -191,5 +191,4 @@ class CTP8(CTP):
 
 if __name__ == '__main__':
     problem = CTP1(n_constr=3)
-
     print(problem.n_constr)

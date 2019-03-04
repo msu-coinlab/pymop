@@ -121,7 +121,7 @@ class Problem:
     def evaluate(self,
                  X,
                  *args,
-                 return_values_of=("F", "CV"),
+                 return_values_of="auto",
                  return_as_dictionary=False,
                  **kwargs):
 
@@ -139,12 +139,22 @@ class Problem:
             A two dimensional matrix where each row is a point to evaluate and each column a variable.
 
         return_as_dictionary : bool
+            If this is true than only one object, a dictionary, is returned. This contains all the results
+            that are defined by return_values_of.
 
         return_values_of : list of strings
+            You can provide a list of strings which defines the values that are returned. By default it is set to
+            "auto" which means depending on the problem the function values or additional the constraint violation (if
+            the problem has constraints) are returned. Otherwise, you can provide a list of values to be returned.
+
+            Allowed is ["F", "CV", "G", "dF", "dG", "dCV", "hF", "hG", "hCV"] where the d stands for
+            derivative and h stands for hessian matrix.
 
 
         Returns
         -------
+
+            A dictionary, if return_as_dictionary enabled, or a list of values as defined in return_values_of.
 
         """
 
@@ -155,6 +165,12 @@ class Problem:
         # check the dimensionality of the problem and the given input
         if X.shape[1] != self.n_var:
             raise Exception('Input dimension %s are not equal to n_var %s!' % (X.shape[1], self.n_var))
+
+        # automatic return the function values and CV if it has constraints if not defined otherwise
+        if type(return_values_of) == str and return_values_of == "auto":
+            return_values_of = ["F"]
+            if self.n_constr > 0:
+                return_values_of.append("CV")
 
         # create the output dictionary for _evaluate to be filled
         out = {}
