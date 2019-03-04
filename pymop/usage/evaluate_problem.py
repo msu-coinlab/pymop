@@ -4,17 +4,20 @@ from pymop.problems.zdt import ZDT1
 
 problem = ZDT1(n_var=10)
 
-# evaluation function returns by default two numpy arrays - objective function values and constraints -
-# as input either provide a vector
-F, G = problem.evaluate(np.random.random(10))
+# if the function does not have any constraints only function values are returned
+F = problem.evaluate(np.random.random(10))
 
-# or a whole matrix to evaluate several solutions at once
-F, G = problem.evaluate(np.random.random((100, 10)))
+# in case more than one solution should be evaluated you can provide a matrix
+F = problem.evaluate(np.random.random((100, 10)))
 
 from pymop.problems.welded_beam import WeldedBeam
 problem = WeldedBeam()
 
-# if no constraints should be returned
+# by default a problem with constrained will also return the constraint violation
+F, CV = problem.evaluate(np.random.random((100, 4)))
+
+# if only specific values are required return_values_of can be defined
 F = problem.evaluate(np.random.random((100, 4)), return_values_of=["F"])
 
-F, G, CV = problem.evaluate(np.random.random((100, 4)), return_values_of=["F", "G", "CV"])
+# in this case more values are returned (also the gradient of the objective values!)
+F, G, CV, dF = problem.evaluate(np.random.random((100, 4)), return_values_of=["F", "G", "CV", "dF"])

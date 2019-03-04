@@ -4,8 +4,10 @@ pymop - Multi-Objective Optimization Problems
 This framework provides a collection of test problems in Python. The main features are:
 
 - Most important multi-objective test function is one place
-- Vectorized evaluation by using numpy matrices
+- Vectorized evaluation by using numpy matrices (no for loops)
+- Gradients and Hessian matrices are available through automatic differentiation
 - Easily new problems can be created using custom classes or functions
+
 
 Here, you can find a detailed documentation and information about the framework:
 https://www.egr.msu.edu/coinlab/blankjul/pymop/

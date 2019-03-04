@@ -247,13 +247,16 @@ class Problem:
 
         # if constraint violation should be returned as well
         if self.n_constr == 0:
-            out["CV"] = np.zeros([X.shape[0], 1])
+            CV = np.zeros([X.shape[0], 1])
         else:
-            out["CV"] = Problem.calc_constraint_violation(out["G"])
+            CV = Problem.calc_constraint_violation(out["G"])
+
+        if "CV" in return_values_of:
+            out["CV"] = CV
 
         # if an additional boolean flag for feasibility should be returned
         if "feasible" in return_values_of:
-            out["feasible"] = (out["CV"] <= 0)
+            out["feasible"] = (CV <= 0)
 
         # remove the first dimension of the output - in case input was a 1d- vector
         if only_single_value:
