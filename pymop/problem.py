@@ -140,14 +140,14 @@ class Problem:
 
         return_as_dictionary : bool
             If this is true than only one object, a dictionary, is returned. This contains all the results
-            that are defined by return_values_of.
+            that are defined by return_values_of. Otherwise, by default a tuple as defined is returned.
 
         return_values_of : list of strings
             You can provide a list of strings which defines the values that are returned. By default it is set to
             "auto" which means depending on the problem the function values or additional the constraint violation (if
             the problem has constraints) are returned. Otherwise, you can provide a list of values to be returned.
 
-            Allowed is ["F", "CV", "G", "dF", "dG", "dCV", "hF", "hG", "hCV"] where the d stands for
+            Allowed is ["F", "CV", "G", "dF", "dG", "dCV", "hF", "hG", "hCV", "feasible"] where the d stands for
             derivative and h stands for hessian matrix.
 
 

@@ -41,8 +41,8 @@ included:
 
    -  ZDT 1-6 
    -  DTLZ 1-7 
-   -  CDTLZ
-   -  CTP
+   -  CDTLZ 
+   -  CTP 
    -  Carside Impact
    -  BNH
    -  Kursawe

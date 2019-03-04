@@ -13,9 +13,8 @@ The main features are:
 
 - Most important multi-objective test function is one place
 - Vectorized evaluation by using numpy matrices (no for loops)
-- Derivative available through automatic differentiation
+- Gradients and Hessian matrices are available through automatic differentiation
 - Easily new problems can be created using custom classes or functions
-
 
 
 
@@ -31,11 +30,6 @@ Usage
 ==================================
 .. include:: _usage.rst
 
-
-Contributors
-==================================
-.. include:: _contributors.rst
-
 Contact
 ==================================
 .. include:: _contact.rst
@@ -45,6 +39,10 @@ Changelog
 ==================================
 
 .. include:: _changelog.rst
+
+Contributors
+==================================
+.. include:: _contributors.rst
 
 
 References

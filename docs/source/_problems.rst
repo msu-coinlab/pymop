@@ -20,8 +20,8 @@ included:
 
    -  ZDT 1-6 :cite:`zdt`
    -  DTLZ 1-7 :cite:`dtlz`
-   -  CDTLZ
-   -  CTP
+   -  CDTLZ :cite:`cdtlz`
+   -  CTP :cite:`ctp`
    -  Carside Impact
    -  BNH
    -  Kursawe
