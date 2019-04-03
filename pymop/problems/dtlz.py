@@ -154,6 +154,19 @@ class DTLZ7(DTLZ):
         out["F"] = anp.column_stack([f, (1 + g) * h])
 
 
+class InvertedDTLZ1(DTLZ1):
+
+    def _evaluate(self, x, out, *args, **kwargs):
+        X_, X_M = x[:, :self.n_obj - 1], x[:, self.n_obj - 1:]
+        g = self.g1(X_M)
+
+        super()._evaluate(x, out, *args, **kwargs)
+        out["F"] = 0.5 * (1 + g[:, None]) - out["F"]
+
+    def _calc_pareto_front(self, *args, **kwargs):
+        return self.problem.pareto_front(*args, **kwargs)
+
+
 class ScaledProblem(Problem):
 
     def __init__(self, problem, scale_factor):
@@ -166,10 +179,9 @@ class ScaledProblem(Problem):
     def get_scale(n, scale_factor):
         return anp.power(anp.full(n, scale_factor), anp.arange(n))
 
-    def evaluate(self, X, *args, **kwargs):
-        t = self.problem.evaluate(X, **kwargs)
-        F = t[0] * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
-        return tuple([F] + list(t)[1:])
+    def _evaluate(self, X, out, *args, **kwargs):
+        self.problem._evaluate(X, out, *args, **kwargs)
+        out["F"] = out["F"] * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
 
     def _calc_pareto_front(self, *args, **kwargs):
         return self.problem.pareto_front(*args, **kwargs) * ScaledProblem.get_scale(self.n_obj, self.scale_factor)
@@ -195,4 +207,3 @@ class ConvexProblem(Problem):
     def _calc_pareto_front(self, ref_dirs, *args, **kwargs):
         F = self.problem.pareto_front(ref_dirs)
         return anp.power(F, ConvexProblem.get_power(self.n_obj))
-

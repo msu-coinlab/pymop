@@ -17,6 +17,13 @@ The main features are:
 - Easily new problems can be created using custom classes or functions
 
 
+If you use pymop for research purposes, please cite:
+
+```
+
+```
+
+
 
 Installation
 ==================================
