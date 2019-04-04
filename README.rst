@@ -62,6 +62,6 @@ included:
    -  Truss 2D
    -  Welded Beam
 
-- Many-Objective:
+-  Many-Objective:
    -  DTLZ 1-7 
    -  CDTLZ 
