@@ -1,9 +1,16 @@
+stages:
+  - build
+  - test
+
 image: continuumio/anaconda3
 
-dev:
 
-  before_script:
-    - python setup.py install
+install:
+  stage: build
+  script: python setup.py install
 
-  script:
-    - python tests/test_suite.py
+tests:
+  stage: test
+  script: python tests/test_suite.py
+
+

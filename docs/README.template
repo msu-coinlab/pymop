@@ -1,5 +1,22 @@
 pymop - Multi-Objective Optimization Problems
-==================================
+==========================================================================
+
+
+|gitlab| |python| |license|
+
+
+.. |gitlab| image:: https://gitlab.msu.edu/blankjul/pymop/badges/master/pipeline.svg
+   :alt: pipeline status
+   :target: https://gitlab.msu.edu/blankjul/pymop/commits/master
+
+.. |python| image:: https://img.shields.io/badge/python-3.6-blue.svg
+   :alt: python 3.6
+
+.. |license| image:: https://img.shields.io/badge/license-apache-orange.svg
+   :alt: license apache
+   :target: https://www.apache.org/licenses/LICENSE-2.0
+
+
 
 This framework provides a collection of test problems in Python. The main features are:
 
@@ -13,16 +30,6 @@ Here, you can find a detailed documentation and information about the framework:
 https://www.egr.msu.edu/coinlab/blankjul/pymop/
 
 
-.. image:: https://gitlab.msu.edu/blankjul/pymop/badges/master/pipeline.svg
-   :alt: pipeline status
-   :target: https://gitlab.msu.edu/blankjul/pymop/commits/master
-
-.. image:: https://img.shields.io/badge/python-3.6-blue.svg
-   :alt: python 3.6
-
-.. image:: https://img.shields.io/badge/license-apache-orange.svg
-   :alt: license apache
-   :target: https://www.apache.org/licenses/LICENSE-2.0
 
 
 Problems
