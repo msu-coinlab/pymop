@@ -14,13 +14,11 @@ included:
    -  Schwefel
    -  Sphere
    -  Zakharov
-   -  G
+   -  G1-10
 
 -  Multi-Objective:
 
    -  ZDT 1-6 :cite:`zdt`
-   -  DTLZ 1-7 :cite:`dtlz`
-   -  CDTLZ :cite:`cdtlz`
    -  CTP :cite:`ctp`
    -  Carside Impact
    -  BNH
@@ -29,3 +27,8 @@ included:
    -  TNK
    -  Truss 2D
    -  Welded Beam
+
+- Many-Objective:
+
+   -  DTLZ 1-7 :cite:`dtlz`
+   -  CDTLZ :cite:`cdtlz`

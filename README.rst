@@ -17,6 +17,12 @@ https://www.egr.msu.edu/coinlab/blankjul/pymop/
    :alt: pipeline status
    :target: https://gitlab.msu.edu/blankjul/pymop/commits/master
 
+.. image:: https://img.shields.io/badge/python-3.6-blue.svg
+   :alt: python 3.6
+
+.. image:: https://img.shields.io/badge/license-apache-orange.svg
+   :alt: license apache
+   :target: https://www.apache.org/licenses/LICENSE-2.0
 
 
 Problems
@@ -37,13 +43,11 @@ included:
    -  Schwefel
    -  Sphere
    -  Zakharov
-   -  G
+   -  G1-10
 
 -  Multi-Objective:
 
    -  ZDT 1-6 
-   -  DTLZ 1-7 
-   -  CDTLZ 
    -  CTP 
    -  Carside Impact
    -  BNH
@@ -52,3 +56,8 @@ included:
    -  TNK
    -  Truss 2D
    -  Welded Beam
+
+- Many-Objective:
+
+   -  DTLZ 1-7 
+   -  CDTLZ 
