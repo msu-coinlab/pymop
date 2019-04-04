@@ -2,7 +2,7 @@ pymop - Multi-Objective Optimization Problems
 ==========================================================================
 
 
-|python| |license|
+|gitlab| |python| |license|
 
 
 .. |gitlab| image:: https://gitlab.msu.edu/blankjul/pymop/badges/master/pipeline.svg
@@ -40,7 +40,6 @@ included:
 
 
 -  Single-Objective:
-
    -  Ackley
    -  Cantilevered Beam
    -  Griewank
@@ -53,7 +52,6 @@ included:
    -  G1-10
 
 -  Multi-Objective:
-
    -  ZDT 1-6 
    -  CTP 
    -  Carside Impact
@@ -65,6 +63,5 @@ included:
    -  Welded Beam
 
 - Many-Objective:
-
    -  DTLZ 1-7 
    -  CDTLZ 

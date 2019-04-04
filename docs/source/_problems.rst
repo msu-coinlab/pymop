@@ -4,7 +4,6 @@ included:
 
 
 -  Single-Objective:
-
    -  Ackley
    -  Cantilevered Beam
    -  Griewank
@@ -17,7 +16,6 @@ included:
    -  G1-10
 
 -  Multi-Objective:
-
    -  ZDT 1-6 :cite:`zdt`
    -  CTP :cite:`ctp`
    -  Carside Impact
@@ -29,6 +27,5 @@ included:
    -  Welded Beam
 
 - Many-Objective:
-
    -  DTLZ 1-7 :cite:`dtlz`
    -  CDTLZ :cite:`cdtlz`
